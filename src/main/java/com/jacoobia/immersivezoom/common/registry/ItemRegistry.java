@@ -16,6 +16,11 @@ public class ItemRegistry {
         ITEMS.register(eventBus);
     }
 
+    public static final DeferredItem<Item> ATTUNED_AMETHYST_SHARD = ITEMS.register(
+            "attuned_amethyst_shard",
+            () -> new Item(new Item.Properties().stacksTo(1))
+    );
+
     public static final DeferredItem<Item> ATTUNED_SPYGLASS = ITEMS.register(
             "attuned_spyglass",
             () -> new AttunedSpyglass(new Item.Properties().stacksTo(1))

@@ -37,16 +37,15 @@ import org.slf4j.Logger;
 import java.time.Duration;
 import java.time.Instant;
 
-@Mod(Constants.MOD_ID)
+import static com.jacoobia.immersivezoom.common.Constants.*;
+
+@Mod(MOD_ID)
 public class ImmersiveZoom {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public ImmersiveZoom(IEventBus modEventBus, ModContainer modContainer) {
         Instant start = Instant.now();
-
-        modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
-
         ItemRegistry.init(modEventBus);
 
         Instant end = Instant.now();

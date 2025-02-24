@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 public class AttunedSpyglass extends SpyglassItem {
 
     public static final int USE_DURATION = 1400;
-    public static final float ZOOM_FOV_MODIFIER = 0.1f;
 
     public AttunedSpyglass(Properties properties) {
         super(properties);
@@ -18,4 +17,5 @@ public class AttunedSpyglass extends SpyglassItem {
     public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
         return USE_DURATION;
     }
+
 }
