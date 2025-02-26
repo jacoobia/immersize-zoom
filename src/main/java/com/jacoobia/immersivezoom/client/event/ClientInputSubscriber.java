@@ -10,12 +10,11 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
 
+import static com.jacoobia.immersivezoom.common.Constants.*;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
+
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientInputSubscriber {
-
-    private static final float MAX_ZOOM = 0.1f;
-    private static final float MIN_ZOOM = 1.0f;
-    private static final float ZOOM_STEP = 0.1f;
 
     @SubscribeEvent
     public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
@@ -28,15 +27,13 @@ public class ClientInputSubscriber {
             double scrollDelta = event.getScrollDeltaY();
 
             float newZoom = currentZoom;
-            if (scrollDelta > 0) {
-                newZoom = Math.max(currentZoom - ZOOM_STEP, MAX_ZOOM); // Zoom in
-            } else if (scrollDelta < 0) {
-                newZoom = Math.min(currentZoom + ZOOM_STEP, MIN_ZOOM); // Zoom out
+            if (scrollDelta > INTEGER_ZERO) {
+                newZoom = Math.max(currentZoom - ZOOM_STEP, MAX_ZOOM);
+            } else if (scrollDelta < INTEGER_ZERO) {
+                newZoom = Math.min(currentZoom + ZOOM_STEP, MIN_ZOOM);
             }
 
             AttunedSpyglass.setZoomLevel(stack, newZoom);
-//            ZoomShaderHandler.setZoomFactor(newZoom);
-
             event.setCanceled(true);
         }
     }

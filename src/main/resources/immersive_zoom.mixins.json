@@ -5,10 +5,12 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "immersivezoom.refmap.json",
   "mixins": [
-    "PlayerMixin"
+    "PlayerMixin",
+    "AbstractClientPlayerMixin"
   ],
   "client": [
-    "PlayerMixin"
+    "PlayerMixin",
+    "AbstractClientPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

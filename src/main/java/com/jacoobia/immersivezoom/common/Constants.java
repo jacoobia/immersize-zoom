@@ -10,6 +10,10 @@ public class Constants {
 
     public static final String MOD_ID = "immersive_zoom";
 
+    public static final float MIN_ZOOM = 0.5f; // The base zoom
+    public static final float MAX_ZOOM = 0.1f;
+    public static final float ZOOM_STEP = 0.05f;
+
     public static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .excludeFieldsWithoutExposeAnnotation()

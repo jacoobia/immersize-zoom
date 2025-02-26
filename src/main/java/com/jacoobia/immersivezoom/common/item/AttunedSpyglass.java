@@ -1,5 +1,6 @@
 package com.jacoobia.immersivezoom.common.item;
 
+import com.jacoobia.immersivezoom.common.Constants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import static com.jacoobia.immersivezoom.common.Constants.MIN_ZOOM;
 import static com.jacoobia.immersivezoom.common.registry.DataComponentRegistry.*;
 import static org.apache.commons.lang3.math.NumberUtils.FLOAT_ONE;
 
@@ -46,7 +48,7 @@ public class AttunedSpyglass extends SpyglassItem {
     public static float getZoomLevel(ItemStack stack) {
         if (stack.isEmpty() || !(stack.getItem() instanceof AttunedSpyglass)) return FLOAT_ONE;
         Float zoomFactor = stack.get(ZOOM_FACTOR);
-        return zoomFactor != null ? zoomFactor : FLOAT_ONE;
+        return zoomFactor != null ? zoomFactor : MIN_ZOOM;
     }
 
 }
