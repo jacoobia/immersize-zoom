@@ -1,4 +1,5 @@
 {
   "item.immersive_zoom.attuned_amethyst_shard": "Attuned Amethyst Shard",
-  "item.immersive_zoom.attuned_spyglass": "Attuned Spyglass"
+  "item.immersive_zoom.attuned_spyglass": "Attuned Spyglass",
+  "tooltip.immersive_zoom.zoom_level": "Zoom Level: %s"
 }

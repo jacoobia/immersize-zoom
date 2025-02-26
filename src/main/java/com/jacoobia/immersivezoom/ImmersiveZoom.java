@@ -1,6 +1,7 @@
 package com.jacoobia.immersivezoom;
 
 import com.jacoobia.immersivezoom.common.Constants;
+import com.jacoobia.immersivezoom.common.registry.DataComponentRegistry;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -46,7 +47,10 @@ public class ImmersiveZoom {
 
     public ImmersiveZoom(IEventBus modEventBus, ModContainer modContainer) {
         Instant start = Instant.now();
+
+        LOGGER.info("[ImmersiveZoom] Registering custom registries...");
         ItemRegistry.init(modEventBus);
+        DataComponentRegistry.init(modEventBus);
 
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);
