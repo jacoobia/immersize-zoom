@@ -3,6 +3,7 @@ package com.jacoobia.immersivezoom.common;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -17,6 +18,8 @@ public class Constants {
 
     public static final int SPYGLASS_SLOT_INDEX = 99;
 
+    public static final int DEFAULT_ZOOM_KEY = InputConstants.KEY_Z;
+
     public static final ResourceLocation CUSTOM_INVENTORY_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/gui/container/iz_inventory.png");
 
@@ -25,7 +28,7 @@ public class Constants {
             .excludeFieldsWithoutExposeAnnotation()
             .create();
 
-    public static final Item[] SCOPE_ITEMS = new Item[] {
+    public static final Item[] ZOOM_ITEMS = new Item[] {
             ItemRegistry.ATTUNED_SPYGLASS.get(),
             Items.SPYGLASS
     };

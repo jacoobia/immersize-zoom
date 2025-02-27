@@ -1,5 +1,6 @@
 package com.jacoobia.immersivezoom.common.item;
 
+import com.jacoobia.immersivezoom.common.Translations;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +19,6 @@ public class AttunedSpyglass extends SpyglassItem {
 
     public static final int USE_DURATION = 1400;
 
-    private static final String ZOOM_COMPONENT = "tooltip.immersive_zoom.zoom_level";
 
     public AttunedSpyglass(Properties properties) {
         super(properties);
@@ -34,7 +34,8 @@ public class AttunedSpyglass extends SpyglassItem {
                                 @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
 
         if(stack.get(ZOOM_FACTOR) != null) {
-            tooltipComponents.add(Component.translatable(ZOOM_COMPONENT, stack.get(ZOOM_FACTOR)));
+            @SuppressWarnings("DataFlowIssue") float zoomLevel = stack.get(ZOOM_FACTOR);
+            tooltipComponents.add(Translations.Tooltips.zoomLevel(zoomLevel));
         }
 
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);

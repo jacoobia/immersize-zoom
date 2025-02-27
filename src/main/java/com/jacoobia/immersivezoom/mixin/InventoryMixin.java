@@ -76,7 +76,7 @@ public class InventoryMixin {
      */
     @Inject(method = "setItem", at = @At("HEAD"), cancellable = true)
     private void setItemExtraSlot(int index, ItemStack stack, CallbackInfo callback) {
-        if (index == SPYGLASS_SLOT_INDEX && CollectionUtils.contains(Constants.SCOPE_ITEMS, stack.getItem())) {
+        if (index == SPYGLASS_SLOT_INDEX && CollectionUtils.contains(Constants.ZOOM_ITEMS, stack.getItem())) {
             immersiveZoom$spyglassSlot.set(INTEGER_ZERO, stack);
             callback.cancel();
         }

@@ -1,12 +1,14 @@
 package com.jacoobia.immersivezoom.client.event;
 
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
+import com.jacoobia.immersivezoom.common.registry.KeyMapRegistry;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 
 import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 import static org.apache.commons.lang3.math.NumberUtils.FLOAT_ONE;
@@ -28,5 +30,9 @@ public class ClientSetupSubscriber {
         });
     }
 
+    @SubscribeEvent
+    public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
+        event.register(KeyMapRegistry.ZOOM_TOGGLE);
+    }
 
 }

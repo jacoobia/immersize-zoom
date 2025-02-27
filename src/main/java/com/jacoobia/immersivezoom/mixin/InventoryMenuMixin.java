@@ -34,7 +34,7 @@ public class InventoryMenuMixin {
         Slot slot = new Slot(playerInventory, SPYGLASS_SLOT_INDEX, X_POSITION, Y_POSITION) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return CollectionUtils.contains(Constants.SCOPE_ITEMS, stack.getItem());
+                return CollectionUtils.contains(Constants.ZOOM_ITEMS, stack.getItem());
             }
         };
 

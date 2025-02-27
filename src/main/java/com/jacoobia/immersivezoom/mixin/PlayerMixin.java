@@ -14,7 +14,7 @@ public class PlayerMixin {
     @Inject(method = "isScoping", at = @At("HEAD"), cancellable = true)
     private void modifyIsScoping(CallbackInfoReturnable<Boolean> callback) {
         Player player = (Player) (Object) this;
-        if(player.isUsingItem() && CollectionUtils.contains(Constants.SCOPE_ITEMS, player.getUseItem().getItem())) {
+        if(player.isUsingItem() && CollectionUtils.contains(Constants.ZOOM_ITEMS, player.getUseItem().getItem())) {
             callback.setReturnValue(true);
         }
     }
