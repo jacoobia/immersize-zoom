@@ -3,6 +3,7 @@ package com.jacoobia.immersivezoom.common;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -13,6 +14,11 @@ public class Constants {
     public static final float MIN_ZOOM = 0.5f; // The base zoom
     public static final float MAX_ZOOM = 0.1f;
     public static final float ZOOM_STEP = 0.05f;
+
+    public static final int SPYGLASS_SLOT_INDEX = 99;
+
+    public static final ResourceLocation CUSTOM_INVENTORY_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/gui/container/iz_inventory.png");
 
     public static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
