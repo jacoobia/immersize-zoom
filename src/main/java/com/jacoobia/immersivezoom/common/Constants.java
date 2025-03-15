@@ -30,6 +30,9 @@ public class Constants {
     public static final ResourceLocation CUSTOM_INVENTORY_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/gui/container/iz_inventory.png");
 
+    public static final ResourceLocation EMPTY_SLOT_SPYGLASS =
+            ResourceLocation.fromNamespaceAndPath(MOD_ID,"item/empty_slot_spyglass");
+
     public static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .excludeFieldsWithoutExposeAnnotation()
