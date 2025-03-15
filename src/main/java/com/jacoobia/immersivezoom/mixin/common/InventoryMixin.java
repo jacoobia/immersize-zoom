@@ -1,8 +1,12 @@
-package com.jacoobia.immersivezoom.mixin;
+package com.jacoobia.immersivezoom.mixin.common;
 
 import com.jacoobia.immersivezoom.common.Constants;
 import com.jacoobia.immersivezoom.common.utils.CollectionUtils;
+import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +30,10 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 @Mixin(Inventory.class)
 public class InventoryMixin {
+
+    @Shadow
+    @Final
+    public Player player;
 
     @Shadow
     @Final
@@ -137,4 +145,28 @@ public class InventoryMixin {
     private void clearContentExtraSlot(CallbackInfo callback) {
         immersiveZoom$spyglassSlot.set(INTEGER_ZERO, EMPTY);
     }
+
+    @Inject(method = "save", at = @At("RETURN"))
+    private void saveExtraSlot(ListTag tag, CallbackInfoReturnable<ListTag> callback) {
+        ItemStack spyglassStack = immersiveZoom$spyglassSlot.getFirst();
+        if (!spyglassStack.isEmpty()) {
+            CompoundTag compoundtag = new CompoundTag();
+            compoundtag.putByte("spyglass_slot", (byte) SPYGLASS_SLOT_INDEX);
+            tag.add(immersiveZoom$spyglassSlot.get(INTEGER_ZERO).save(player.registryAccess(), compoundtag));
+        }
+//        callback.setReturnValue(tag);
+    }
+
+    @Inject(method = "load", at = @At("RETURN"))
+    private void loadExtraSlot(ListTag listTag, CallbackInfo callback) {
+        for (int i = 0; i < listTag.size(); i++) {
+            CompoundTag compoundTag = listTag.getCompound(i);
+            if(compoundTag.contains("spyglass_slot")) {
+                ItemStack itemstack = ItemStack.parse(player.registryAccess(), compoundTag).orElse(ItemStack.EMPTY);
+                immersiveZoom$spyglassSlot.set(INTEGER_ZERO, itemstack);
+            }
+        }
+    }
+
+
 }

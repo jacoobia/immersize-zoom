@@ -1,5 +1,6 @@
-package com.jacoobia.immersivezoom.mixin;
+package com.jacoobia.immersivezoom.mixin.accessors;
 
+import com.jacoobia.immersivezoom.mixin.common.InventoryMenuMixin;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;

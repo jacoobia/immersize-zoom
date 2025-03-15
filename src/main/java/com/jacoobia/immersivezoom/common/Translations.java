@@ -10,7 +10,7 @@ public class Translations {
     }
 
     public static class Tooltips {
-        public static Component zoomLevel(float zoomLevel) {
+        public static Component zoomLevel(double zoomLevel) {
             return Component.translatable("tooltip.immersive_zoom.zoom_level", zoomLevel);
         }
     }

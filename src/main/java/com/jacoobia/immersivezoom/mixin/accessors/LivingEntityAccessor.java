@@ -1,4 +1,4 @@
-package com.jacoobia.immersivezoom.mixin;
+package com.jacoobia.immersivezoom.mixin.accessors;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;

@@ -1,8 +1,9 @@
-package com.jacoobia.immersivezoom.mixin;
+package com.jacoobia.immersivezoom.mixin.common;
 
 import com.jacoobia.immersivezoom.common.Constants;
 import com.jacoobia.immersivezoom.common.registry.KeyMapRegistry;
 import com.jacoobia.immersivezoom.common.utils.CollectionUtils;
+import com.jacoobia.immersivezoom.mixin.accessors.LivingEntityAccessor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

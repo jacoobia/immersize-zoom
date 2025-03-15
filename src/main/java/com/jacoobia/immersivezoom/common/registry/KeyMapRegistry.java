@@ -5,7 +5,8 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 
-import static com.jacoobia.immersivezoom.common.Translations.Keybindings.*;
+import static com.jacoobia.immersivezoom.common.Translations.Keybindings.CATEGORY;
+import static com.jacoobia.immersivezoom.common.Translations.Keybindings.ZOOM;
 
 public class KeyMapRegistry {
 

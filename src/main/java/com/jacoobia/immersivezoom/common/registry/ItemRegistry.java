@@ -1,5 +1,6 @@
 package com.jacoobia.immersivezoom.common.registry;
 
+import com.jacoobia.immersivezoom.common.item.AttunedAmethystShard;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -18,12 +19,12 @@ public class ItemRegistry {
 
     public static final DeferredItem<Item> ATTUNED_AMETHYST_SHARD = ITEMS.register(
             "attuned_amethyst_shard",
-            () -> new Item(new Item.Properties().stacksTo(1))
+            AttunedAmethystShard::new
     );
 
     public static final DeferredItem<Item> ATTUNED_SPYGLASS = ITEMS.register(
             "attuned_spyglass",
-            () -> new AttunedSpyglass(new Item.Properties().stacksTo(1))
+            AttunedSpyglass::new
     );
 
 }

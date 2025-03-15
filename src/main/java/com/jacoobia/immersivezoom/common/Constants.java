@@ -12,9 +12,16 @@ public class Constants {
 
     public static final String MOD_ID = "immersive_zoom";
 
-    public static final float MIN_ZOOM = 0.5f; // The base zoom
-    public static final float MAX_ZOOM = 0.1f;
-    public static final float ZOOM_STEP = 0.05f;
+    public static final float MIN_ZOOM = 1.0f;
+    public static final float MAX_ZOOM = 8.3f;
+    public static final float DEFAULT_ZOOM = 1.5f;
+    public static final float ZOOM_STEP = 0.1f;
+    public static final float QUICK_ZOOM_STEP = 0.2f;
+
+    public static final float MAX_FOV = 170.0f;
+    public static final float MIN_FOV = 1.0f;
+
+    public static final float ZOOMED_TRANSITION_MODIFIER = 0.5f;
 
     public static final int SPYGLASS_SLOT_INDEX = 99;
 

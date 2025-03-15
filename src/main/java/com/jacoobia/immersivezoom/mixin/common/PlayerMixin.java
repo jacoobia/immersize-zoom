@@ -1,4 +1,4 @@
-package com.jacoobia.immersivezoom.mixin;
+package com.jacoobia.immersivezoom.mixin.common;
 
 import com.jacoobia.immersivezoom.common.Constants;
 import com.jacoobia.immersivezoom.common.utils.CollectionUtils;

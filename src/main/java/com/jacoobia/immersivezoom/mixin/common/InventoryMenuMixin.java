@@ -1,7 +1,8 @@
-package com.jacoobia.immersivezoom.mixin;
+package com.jacoobia.immersivezoom.mixin.common;
 
 import com.jacoobia.immersivezoom.common.Constants;
 import com.jacoobia.immersivezoom.common.utils.CollectionUtils;
+import com.jacoobia.immersivezoom.mixin.accessors.InventoryMenuAccessor;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;

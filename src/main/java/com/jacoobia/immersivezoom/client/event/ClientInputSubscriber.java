@@ -2,7 +2,7 @@ package com.jacoobia.immersivezoom.client.event;
 
 import com.jacoobia.immersivezoom.common.Constants;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
-import com.jacoobia.immersivezoom.common.utils.CollectionUtils;
+import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,36 +21,46 @@ public class ClientInputSubscriber {
 
     @SubscribeEvent
     public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
-        Player player = Minecraft.getInstance().player;
-        if(player == null) return;
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+        if (player == null) return;
 
         ItemStack stack = player.getUseItem();
-        if (!stack.isEmpty() && stack.getItem() instanceof AttunedSpyglass) {
+        if (!stack.isEmpty() && stack.is(ItemRegistry.ATTUNED_SPYGLASS.get())) {
             float currentZoom = AttunedSpyglass.getZoomLevel(stack);
             double scrollDelta = event.getScrollDeltaY();
 
             float newZoom = currentZoom;
+            float step = player.isCrouching() ?  QUICK_ZOOM_STEP : ZOOM_STEP;
+
             if (scrollDelta > INTEGER_ZERO) {
-                newZoom = Math.max(currentZoom - ZOOM_STEP, MAX_ZOOM);
+                newZoom = Math.min(currentZoom + step, MAX_ZOOM);
             } else if (scrollDelta < INTEGER_ZERO) {
-                newZoom = Math.min(currentZoom + ZOOM_STEP, MIN_ZOOM);
+                newZoom = Math.max(currentZoom - step, MIN_ZOOM);
             }
 
-            AttunedSpyglass.setZoomLevel(stack, newZoom);
+            if (newZoom != currentZoom) {
+                AttunedSpyglass.setZoomLevel(stack, newZoom);
+            }
+
             event.setCanceled(true);
         }
     }
 
     @SubscribeEvent
     public static void onKeyInput(InputEvent.Key event) {
-        Player player = Minecraft.getInstance().player;
-        if (player == null || Minecraft.getInstance().screen != null) return;
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+        if (player == null || minecraft.screen != null) return;
 
         if (ZOOM_TOGGLE.isDown()) {
-            ItemStack spyglassStack = player.getInventory().getItem(SPYGLASS_SLOT_INDEX);
-            if (spyglassStack.isEmpty() || !CollectionUtils.contains(ZOOM_ITEMS, spyglassStack.getItem())) return;
-            player.startUsingItem(null);
+            ItemStack spyglassStack = player.getUseItem();
+
+            // Check if the held item is the Attuned Spyglass
+            if (!spyglassStack.isEmpty() && spyglassStack.is(ItemRegistry.ATTUNED_SPYGLASS.get())) {
+                player.startUsingItem(null);
+            }
         }
     }
-
 }
+
