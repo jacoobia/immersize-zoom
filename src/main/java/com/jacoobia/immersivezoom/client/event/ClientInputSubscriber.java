@@ -53,14 +53,14 @@ public class ClientInputSubscriber {
         Player player = minecraft.player;
         if (player == null || minecraft.screen != null) return;
 
-        if (ZOOM_TOGGLE.isDown()) {
-            ItemStack spyglassStack = player.getUseItem();
+        if (ZOOM_TOGGLE.consumeClick() && !player.isScoping()) {
+            ItemStack spyglassStack = player.getInventory().getItem(Constants.SPYGLASS_SLOT_INDEX);
 
-            // Check if the held item is the Attuned Spyglass
             if (!spyglassStack.isEmpty() && spyglassStack.is(ItemRegistry.ATTUNED_SPYGLASS.get())) {
                 player.startUsingItem(null);
             }
         }
     }
+
 }
 
