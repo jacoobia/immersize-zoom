@@ -8,6 +8,9 @@ import org.jetbrains.annotations.NotNull;
 
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 
+/**
+ * Item representing an attuned amethyst shard, used for crafting attuned spyglasses
+ */
 public class AttunedAmethystShard extends Item {
 
     public AttunedAmethystShard() {

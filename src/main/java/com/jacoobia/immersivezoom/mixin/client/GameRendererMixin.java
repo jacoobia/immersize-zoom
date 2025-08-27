@@ -1,74 +1,109 @@
 package com.jacoobia.immersivezoom.mixin.client;
 
+import com.jacoobia.immersivezoom.client.registry.KeyMapRegistry;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
-import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
+import com.jacoobia.immersivezoom.common.registry.DataComponentRegistry;
+import com.jacoobia.immersivezoom.common.utils.ClientUtils;
+import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.jacoobia.immersivezoom.common.Constants.MAX_FOV;
-import static com.jacoobia.immersivezoom.common.Constants.MIN_FOV;
-import static com.jacoobia.immersivezoom.common.Constants.ZOOMED_TRANSITION_MODIFIER;
+import static com.jacoobia.immersivezoom.common.Constants.*;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
 
     @Shadow
     private float fov;
+
     @Shadow
     private float oldFov;
 
     @Inject(method = "getFov", at = @At("RETURN"), cancellable = true)
-    private void getFov(Camera activeRenderInfo, float partialTicks, boolean useFOVSetting, CallbackInfoReturnable<Double> callback) {
-        Minecraft minecraft = Minecraft.getInstance();
-        LocalPlayer localPlayer = minecraft.player;
+    private void overrideFov(Camera camera, float partialTick, boolean useFovSetting,
+                             CallbackInfoReturnable<Double> callbackInfoReturnable) {
+        LocalPlayer player = ClientUtils.getLocalPlayerCast();
+        if (player == null) return;
 
-        if (localPlayer != null && localPlayer.isUsingItem()) {
-            ItemStack stack = localPlayer.getUseItem();
-
-            if (stack.is(ItemRegistry.ATTUNED_SPYGLASS.get())) {
-                double normalFov = callback.getReturnValue();
-                float zoomLevel = AttunedSpyglass.getZoomLevel(stack);
-
-                if (normalFov > MAX_FOV) normalFov = MAX_FOV;
-                if (normalFov < MIN_FOV) normalFov = MIN_FOV;
-
-                double modifiedFov = normalFov / zoomLevel;
-
-                if (modifiedFov > MAX_FOV) modifiedFov = MAX_FOV;
-                if (modifiedFov < MIN_FOV) modifiedFov = MIN_FOV;
-
-                callback.setReturnValue(modifiedFov);
-            }
+        if (ClientUtils.isThirdPersonFront()) {
+            return;
         }
+
+        boolean vanillaInHand = immersiveZoom$isVanillaInHandScoping(player);
+        boolean hotkeyInSlot  = immersiveZoom$isHotkeySlotScoping(player);
+
+        if (!vanillaInHand && !hotkeyInSlot) {
+            return;
+        }
+
+        ItemStack active = vanillaInHand ? player.getUseItem()
+                : player.getInventory().getItem(SPYGLASS_SLOT_INDEX);
+        if (active.isEmpty() || !SpyglassUtils.isSpyglass(active)) {
+            return;
+        }
+
+        double vanillaComputedFov = callbackInfoReturnable.getReturnValue();
+        double baseFov = vanillaInHand ? vanillaComputedFov * VANILLA_ZOOM : vanillaComputedFov;
+
+        final boolean isAttuned = active.getItem() instanceof AttunedSpyglass;
+        final float magnification;
+        if (isAttuned) {
+            Float stored = active.get(DataComponentRegistry.ZOOM_FACTOR.get());
+            float zoom = stored != null ? stored : ATTUNED_ZOOM_DEFAULT;
+            magnification = Mth.clamp(zoom, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
+        } else {
+            magnification = VANILLA_ZOOM;
+        }
+
+        double scopedFov = baseFov / Math.max(1.0, magnification);
+        scopedFov = Mth.clamp(scopedFov, 0.5f, 179.0f);
+
+        callbackInfoReturnable.setReturnValue(scopedFov);
     }
 
     @Inject(method = "tickFov", at = @At("HEAD"), cancellable = true)
-    private void tickFov(CallbackInfo callback) {
-        Minecraft minecraft = Minecraft.getInstance();
-        LocalPlayer localPlayer = minecraft.player;
+    private void tickFov(CallbackInfo callbackInfo) {
+        LocalPlayer player = ClientUtils.getLocalPlayerCast();
+        if (player == null || ClientUtils.isThirdPersonFront()) return;
 
-        if (localPlayer != null && localPlayer.isUsingItem()) {
-            ItemStack stack = localPlayer.getUseItem();
+        boolean vanillaInHand = immersiveZoom$isVanillaInHandScoping(player);
+        boolean hotkeyInSlot  = immersiveZoom$isHotkeySlotScoping(player);
+        if (!vanillaInHand && !hotkeyInSlot) return;
 
-            if (stack.is(ItemRegistry.ATTUNED_SPYGLASS.get())) {
-                callback.cancel();
+        ItemStack active = vanillaInHand ? player.getUseItem()
+                : player.getInventory().getItem(SPYGLASS_SLOT_INDEX);
+        if (active.isEmpty() || !(active.getItem() instanceof AttunedSpyglass)) return;
 
-                float zoomLevel = AttunedSpyglass.getZoomLevel(stack);
+        Float stored = active.get(DataComponentRegistry.ZOOM_FACTOR.get());
+        float magnification = stored != null
+                ? Mth.clamp(stored, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX)
+                : ATTUNED_ZOOM_DEFAULT;
 
-                this.oldFov = this.fov;
-                this.fov += ((NumberUtils.FLOAT_ONE / zoomLevel) - this.fov) * ZOOMED_TRANSITION_MODIFIER;
-            }
-        }
+        this.oldFov = this.fov;
+        this.fov += ((1.0f / Math.max(1.0f, magnification)) - this.fov) * ZOOMED_TRANSITION_MODIFIER;
+        callbackInfo.cancel();
+    }
+
+    @Unique
+    private static boolean immersiveZoom$isVanillaInHandScoping(LocalPlayer player) {
+        return player.isUsingItem() && SpyglassUtils.isSpyglass(player.getUseItem());
+    }
+
+    @Unique
+    private static boolean immersiveZoom$isHotkeySlotScoping(LocalPlayer player) {
+        if (!KeyMapRegistry.ZOOM_KEYMAPPING.isDown()) return false;
+        ItemStack slot = player.getInventory().getItem(SPYGLASS_SLOT_INDEX);
+        return SpyglassUtils.isSpyglass(slot);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.jacoobia.immersivezoom.common;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.resources.ResourceLocation;
@@ -12,14 +10,14 @@ public class Constants {
 
     public static final String MOD_ID = "immersive_zoom";
 
-    public static final float MIN_ZOOM = 1.0f;
-    public static final float MAX_ZOOM = 8.3f;
-    public static final float DEFAULT_ZOOM = 1.5f;
+    public static final float ATTUNED_ZOOM_MIN = 3.0f;
+    public static final float ATTUNED_ZOOM_MAX = 20.0f;
+    public static final float ATTUNED_ZOOM_DEFAULT = 3.0f;
+
+    public static final float VANILLA_ZOOM = 10.0f;
+
     public static final float ZOOM_STEP = 0.1f;
     public static final float QUICK_ZOOM_STEP = 0.2f;
-
-    public static final float MAX_FOV = 170.0f;
-    public static final float MIN_FOV = 1.0f;
 
     public static final float ZOOMED_TRANSITION_MODIFIER = 0.5f;
 
@@ -32,11 +30,6 @@ public class Constants {
 
     public static final ResourceLocation EMPTY_SLOT_SPYGLASS =
             ResourceLocation.fromNamespaceAndPath(MOD_ID,"item/empty_slot_spyglass");
-
-    public static final Gson GSON = new GsonBuilder()
-            .setPrettyPrinting()
-            .excludeFieldsWithoutExposeAnnotation()
-            .create();
 
     public static final Item[] ZOOM_ITEMS = new Item[] {
             ItemRegistry.ATTUNED_SPYGLASS.get(),

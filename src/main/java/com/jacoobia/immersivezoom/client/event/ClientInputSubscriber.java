@@ -1,65 +1,58 @@
 package com.jacoobia.immersivezoom.client.event;
 
-import com.jacoobia.immersivezoom.common.Constants;
+import com.jacoobia.immersivezoom.client.ClientSpyglassState;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
-import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
+import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
+import com.jacoobia.immersivezoom.common.utils.ClientUtils;
+import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import static com.jacoobia.immersivezoom.common.Constants.*;
-import static com.jacoobia.immersivezoom.common.registry.KeyMapRegistry.ZOOM_TOGGLE;
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-@SuppressWarnings("DataFlowIssue")
-@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientInputSubscriber {
 
     @SubscribeEvent
     public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-        Player player = minecraft.player;
-        if (player == null) return;
+        LocalPlayer localPlayer = ClientUtils.getLocalPlayerCast();
+        if (localPlayer == null) return;
 
-        ItemStack stack = player.getUseItem();
-        if (!stack.isEmpty() && stack.is(ItemRegistry.ATTUNED_SPYGLASS.get())) {
-            float currentZoom = AttunedSpyglass.getZoomLevel(stack);
-            double scrollDelta = event.getScrollDeltaY();
+        if (ClientUtils.isThirdPersonFront()) return;
 
-            float newZoom = currentZoom;
-            float step = player.isCrouching() ?  QUICK_ZOOM_STEP : ZOOM_STEP;
+        ItemStack activeSpyglassStack = ClientSpyglassState.getActiveSpyglassClient();
+        boolean isVanillaInHandScoping =
+                localPlayer.isUsingItem() && SpyglassUtils.isSpyglass(localPlayer.getUseItem());
+        boolean isHotkeyScoping =
+                ClientSpyglassState.isLocalHeld() && SpyglassUtils.isSpyglass(activeSpyglassStack);
 
-            if (scrollDelta > INTEGER_ZERO) {
-                newZoom = Math.min(currentZoom + step, MAX_ZOOM);
-            } else if (scrollDelta < INTEGER_ZERO) {
-                newZoom = Math.max(currentZoom - step, MIN_ZOOM);
-            }
+        if (!(isVanillaInHandScoping || isHotkeyScoping)) return;
 
-            if (newZoom != currentZoom) {
-                AttunedSpyglass.setZoomLevel(stack, newZoom);
-            }
+        event.setCanceled(true);
 
-            event.setCanceled(true);
-        }
-    }
+        if (!(activeSpyglassStack.getItem() instanceof AttunedSpyglass)) return;
 
-    @SubscribeEvent
-    public static void onKeyInput(InputEvent.Key event) {
-        Minecraft minecraft = Minecraft.getInstance();
-        Player player = minecraft.player;
-        if (player == null || minecraft.screen != null) return;
+        double mouseWheelDelta = event.getScrollDeltaY();
+        if (mouseWheelDelta == 0) return;
 
-        if (ZOOM_TOGGLE.consumeClick() && !player.isScoping()) {
-            ItemStack spyglassStack = player.getInventory().getItem(Constants.SPYGLASS_SLOT_INDEX);
+        boolean isShiftHeld = localPlayer.isShiftKeyDown();
+        float stepPerNotch = isShiftHeld ? QUICK_ZOOM_STEP : ZOOM_STEP;
+        float signedStep   = (float)Math.signum(mouseWheelDelta) * stepPerNotch;
 
-            if (!spyglassStack.isEmpty() && spyglassStack.is(ItemRegistry.ATTUNED_SPYGLASS.get())) {
-                player.startUsingItem(null);
-            }
-        }
+        float currentZoom = AttunedSpyglass.getZoom(activeSpyglassStack);
+        float nextZoom    = Mth.clamp(currentZoom + signedStep, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
+
+        // Client prediction for smooth feel
+        AttunedSpyglass.setZoom(activeSpyglassStack, nextZoom);
+        ClientSpyglassState.setLocalZoom(nextZoom);
+
+        PacketDistributor.sendToServer(SpyglassScopePacket.setFinal(nextZoom));
     }
 
 }
