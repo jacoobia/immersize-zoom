@@ -1,6 +1,5 @@
 package com.jacoobia.immersivezoom.datagen.providers;
 
-import com.jacoobia.immersivezoom.common.Constants;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.jacoobia.immersivezoom.datagen.model.SeparateTransformsModelBuilder;
 import net.minecraft.data.PackOutput;
@@ -10,18 +9,21 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
+import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 import static com.jacoobia.immersivezoom.datagen.model.SeparateTransformsModelBuilder.ITEM_MODEL_SUFFIX;
 
 @SuppressWarnings("SameParameterValue")
 public class ModItemModelProvider extends ItemModelProvider {
 
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, Constants.MOD_ID, existingFileHelper);
+        super(output, MOD_ID, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
         basicItem(ItemRegistry.ATTUNED_AMETHYST_SHARD.get());
+        basicItem(ItemRegistry.UNATTUNED_AMETHYST_SHARD.get());
+        basicItem(ItemRegistry.COPPER_FOCUS.get());
         handHeldModelItem(ItemRegistry.ATTUNED_SPYGLASS);
     }
 

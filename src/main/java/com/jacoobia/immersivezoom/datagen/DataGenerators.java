@@ -1,5 +1,7 @@
 package com.jacoobia.immersivezoom.datagen;
 
+import com.jacoobia.immersivezoom.datagen.providers.ModAdvancementProvider;
+import com.jacoobia.immersivezoom.datagen.providers.ModGlobalLootModifierProvider;
 import com.jacoobia.immersivezoom.datagen.providers.ModItemModelProvider;
 import com.jacoobia.immersivezoom.datagen.providers.ModRecipeProvider;
 import net.minecraft.core.HolderLookup;
@@ -26,6 +28,8 @@ public class DataGenerators {
 
         generator.addProvider(event.includeClient(), new ModItemModelProvider(output, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModRecipeProvider(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModAdvancementProvider(output, lookupProvider, existingFileHelper));
     }
 
 

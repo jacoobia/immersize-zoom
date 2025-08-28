@@ -1,7 +1,7 @@
 package com.jacoobia.immersivezoom.client.event;
 
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
-import com.jacoobia.immersivezoom.common.utils.ClientUtils;
+import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.client.player.LocalPlayer;
 import net.neoforged.api.distmarker.Dist;

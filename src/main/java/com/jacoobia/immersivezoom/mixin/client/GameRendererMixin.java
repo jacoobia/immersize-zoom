@@ -2,7 +2,7 @@ package com.jacoobia.immersivezoom.mixin.client;
 
 import com.jacoobia.immersivezoom.client.registry.KeyMapRegistry;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
-import com.jacoobia.immersivezoom.common.utils.ClientUtils;
+import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.utils.ScopedZoomContext;
 import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.client.Camera;

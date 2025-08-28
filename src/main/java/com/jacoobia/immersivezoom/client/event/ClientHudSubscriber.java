@@ -1,6 +1,6 @@
 package com.jacoobia.immersivezoom.client.event;
 
-import com.jacoobia.immersivezoom.common.utils.ClientUtils;
+import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;

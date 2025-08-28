@@ -1,8 +1,22 @@
 {
+  "item.immersive_zoom.unattuned_amethyst_shard": "Unattuned Amethyst Shard",
   "item.immersive_zoom.attuned_amethyst_shard": "Attuned Amethyst Shard",
+  "item.immersive_zoom.copper_focus": "Copper Focus",
   "item.immersive_zoom.attuned_spyglass": "Attuned Spyglass",
+
   "tooltip.immersive_zoom.zoom_level": "Zoom Level: %s",
 
   "key.immersive_zoom.keybinds.category": "Immersive Zoom",
-  "key.immersive_zoom.keybinds.keybind.zoom": "Zoom (Hold)"
+  "key.immersive_zoom.keybinds.keybind.zoom": "Zoom (Hold)",
+
+  "advancements.immersive_zoom.root.title": "Immersive Zoom",
+  "advancements.immersive_zoom.root.description": "Harness the power of amethysts to zoom in on distant objects.",
+  "advancements.immersive_zoom.unattuned_amethyst.title": "Flawless",
+  "advancements.immersive_zoom.unattuned_amethyst.description": "Obtain a perfect Amethyst Shard",
+  "advancements.immersive_zoom.attuned_amethyst.title": "Moonlit Resonance",
+  "advancements.immersive_zoom.attuned_amethyst.description": "Attune a perfect Amethyst Shard using the power of the moon",
+  "advancements.immersive_zoom.copper_focus.title": "Focusing the light",
+  "advancements.immersive_zoom.copper_focus.description": "Craft a Copper Focus",
+  "advancements.immersive_zoom.attuned_spyglass.title": "Taking a closer look",
+  "advancements.immersive_zoom.attuned_spyglass.description": "Craft an Attuned Spyglass using a Copper Focus and an Attuned Amethyst Shard"
 }

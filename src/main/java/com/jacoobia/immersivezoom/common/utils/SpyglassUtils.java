@@ -1,5 +1,6 @@
 package com.jacoobia.immersivezoom.common.utils;
 
+import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

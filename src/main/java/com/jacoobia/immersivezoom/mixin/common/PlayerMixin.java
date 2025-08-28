@@ -1,7 +1,7 @@
 package com.jacoobia.immersivezoom.mixin.common;
 
 import com.jacoobia.immersivezoom.client.registry.KeyMapRegistry;
-import com.jacoobia.immersivezoom.common.utils.ClientUtils;
+import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;

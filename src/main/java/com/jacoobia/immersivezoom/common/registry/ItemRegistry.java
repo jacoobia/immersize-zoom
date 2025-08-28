@@ -2,6 +2,8 @@ package com.jacoobia.immersivezoom.common.registry;
 
 import com.jacoobia.immersivezoom.common.item.AttunedAmethystShard;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
+import com.jacoobia.immersivezoom.common.item.CopperFocus;
+import com.jacoobia.immersivezoom.common.item.UnattunedAmethystShard;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -16,6 +18,16 @@ public class ItemRegistry {
     public static void init(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
+
+    public static final DeferredItem<Item> COPPER_FOCUS = ITEMS.register(
+            "copper_focus",
+            CopperFocus::new
+    );
+
+    public static final DeferredItem<Item> UNATTUNED_AMETHYST_SHARD = ITEMS.register(
+            "unattuned_amethyst_shard",
+            UnattunedAmethystShard::new
+    );
 
     public static final DeferredItem<Item> ATTUNED_AMETHYST_SHARD = ITEMS.register(
             "attuned_amethyst_shard",

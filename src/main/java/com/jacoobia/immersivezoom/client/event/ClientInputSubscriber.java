@@ -2,7 +2,7 @@ package com.jacoobia.immersivezoom.client.event;
 
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassZoomPacket;
-import com.jacoobia.immersivezoom.common.utils.ClientUtils;
+import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.utils.DataUtils;
 import com.jacoobia.immersivezoom.common.utils.ItemUtils;
 import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
