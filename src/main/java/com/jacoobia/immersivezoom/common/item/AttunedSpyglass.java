@@ -1,17 +1,24 @@
 package com.jacoobia.immersivezoom.common.item;
 
+import com.jacoobia.immersivezoom.client.ui.tooltip.AttunedZoomBarTooltip;
+import com.jacoobia.immersivezoom.common.utils.DataUtils;
+import com.jacoobia.immersivezoom.common.utils.ItemUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpyglassItem;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Locale;
+import java.util.Optional;
 
 import static com.jacoobia.immersivezoom.common.Constants.*;
 import static com.jacoobia.immersivezoom.common.registry.DataComponentRegistry.ZOOM_FACTOR;
@@ -22,8 +29,7 @@ public class AttunedSpyglass extends SpyglassItem {
     public static final int USE_DURATION = 1400;
 
     public AttunedSpyglass() {
-        super(new Item.Properties().stacksTo(INTEGER_ONE)
-                .component(ZOOM_FACTOR.get(), ATTUNED_ZOOM_DEFAULT));
+        super(new Item.Properties().stacksTo(INTEGER_ONE));
     }
 
     @Override
@@ -32,19 +38,23 @@ public class AttunedSpyglass extends SpyglassItem {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context,
-                                @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
+        ItemStack heldStack = player.getItemInHand(hand);
+        if (!level.isClientSide) {
+            ItemUtils.setItemId(heldStack);
+            if (player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.getInventory().setChanged();
+            }
+        }
+        return super.use(level, player, hand);
+    }
 
-        Float storedZoom = stack.get(ZOOM_FACTOR.get());
-        float zoom = storedZoom != null ? Mth.clamp(storedZoom, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX)
-                : ATTUNED_ZOOM_DEFAULT;
-
-        tooltipComponents.add(Component.translatable(
-                "tooltip.immersive_zoom.zoom_level",
-                String.format(Locale.ROOT, "%.2fx", zoom)
-        ));
-
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+    @Override
+    public @NotNull Optional<TooltipComponent> getTooltipImage(@NotNull ItemStack stack) {
+        float zoom = DataUtils.getFloatOrDefault(stack, ZOOM_FACTOR, ATTUNED_ZOOM_DEFAULT);
+        float progress = (zoom - ATTUNED_ZOOM_MIN) / (ATTUNED_ZOOM_MAX - ATTUNED_ZOOM_MIN);
+        progress = Mth.clamp(progress, 0f, 1f);
+        return Optional.of(new AttunedZoomBarTooltip(progress, zoom));
     }
 
     @Override
@@ -52,27 +62,6 @@ public class AttunedSpyglass extends SpyglassItem {
         return super.getName(stack)
                 .copy()
                 .withStyle(style -> style.withColor(ChatFormatting.GOLD));
-    }
-
-    /**
-     * Clamp the zoom value to be within the allowed range
-     * @param stack the item stack
-     * @return the clamped zoom value
-     */
-    public static float getZoom(ItemStack stack) {
-        Float zoomFactor = stack.get(ZOOM_FACTOR.get());
-        return zoomFactor != null ? Mth.clamp(zoomFactor, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX) : ATTUNED_ZOOM_DEFAULT;
-    }
-
-    /**
-     * Set the zoom value, clamped to the allowed range
-     * @param stack the item stack
-     * @param zoomFactor the zoom factor to set
-     */
-    public static void setZoom(ItemStack stack, float zoomFactor) {
-        if (stack.isEmpty() || !(stack.getItem() instanceof AttunedSpyglass)) return;
-        float clampedZoom = Mth.clamp(zoomFactor, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
-        stack.set(ZOOM_FACTOR.get(), clampedZoom);
     }
 
 }

@@ -2,8 +2,8 @@ package com.jacoobia.immersivezoom.mixin.client;
 
 import com.jacoobia.immersivezoom.client.registry.KeyMapRegistry;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
-import com.jacoobia.immersivezoom.common.registry.DataComponentRegistry;
 import com.jacoobia.immersivezoom.common.utils.ClientUtils;
+import com.jacoobia.immersivezoom.common.utils.ScopedZoomContext;
 import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.client.Camera;
 import net.minecraft.client.player.LocalPlayer;
@@ -19,79 +19,67 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.jacoobia.immersivezoom.common.Constants.*;
+import static com.jacoobia.immersivezoom.common.registry.DataComponentRegistry.ZOOM_FACTOR;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
 
-    @Shadow
-    private float fov;
-
-    @Shadow
-    private float oldFov;
+    @Shadow private float fov;
+    @Shadow private float oldFov;
 
     @Inject(method = "getFov", at = @At("RETURN"), cancellable = true)
     private void overrideFov(Camera camera, float partialTick, boolean useFovSetting,
                              CallbackInfoReturnable<Double> callbackInfoReturnable) {
-        LocalPlayer player = ClientUtils.getLocalPlayerCast();
-        if (player == null) return;
+        ScopedZoomContext context = immersiveZoom$getScopedZoomContext();
+        if (context == null) return;
 
-        if (ClientUtils.isThirdPersonFront()) {
-            return;
-        }
-
-        boolean vanillaInHand = immersiveZoom$isVanillaInHandScoping(player);
-        boolean hotkeyInSlot  = immersiveZoom$isHotkeySlotScoping(player);
-
-        if (!vanillaInHand && !hotkeyInSlot) {
-            return;
-        }
-
-        ItemStack active = vanillaInHand ? player.getUseItem()
-                : player.getInventory().getItem(SPYGLASS_SLOT_INDEX);
-        if (active.isEmpty() || !SpyglassUtils.isSpyglass(active)) {
-            return;
-        }
-
-        double vanillaComputedFov = callbackInfoReturnable.getReturnValue();
-        double baseFov = vanillaInHand ? vanillaComputedFov * VANILLA_ZOOM : vanillaComputedFov;
-
-        final boolean isAttuned = active.getItem() instanceof AttunedSpyglass;
-        final float magnification;
-        if (isAttuned) {
-            Float stored = active.get(DataComponentRegistry.ZOOM_FACTOR.get());
-            float zoom = stored != null ? stored : ATTUNED_ZOOM_DEFAULT;
-            magnification = Mth.clamp(zoom, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
-        } else {
-            magnification = VANILLA_ZOOM;
-        }
-
-        double scopedFov = baseFov / Math.max(1.0, magnification);
-        scopedFov = Mth.clamp(scopedFov, 0.5f, 179.0f);
-
-        callbackInfoReturnable.setReturnValue(scopedFov);
+        double clamped = Mth.clamp(callbackInfoReturnable.getReturnValue(), 0.5f, 179.0f);
+        callbackInfoReturnable.setReturnValue(clamped);
     }
 
     @Inject(method = "tickFov", at = @At("HEAD"), cancellable = true)
     private void tickFov(CallbackInfo callbackInfo) {
+        ScopedZoomContext context = immersiveZoom$getScopedZoomContext();
+        if (context == null) return;
+
+        boolean isAttuned = context.active().getItem() instanceof AttunedSpyglass;
+
+        if (isAttuned) {
+            Float stored = context.active().get(ZOOM_FACTOR);
+            float magnification = stored != null
+                    ? Mth.clamp(stored, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX)
+                    : ATTUNED_ZOOM_DEFAULT;
+
+            this.oldFov = this.fov;
+            this.fov += ((1.0f / Math.max(1.0f, magnification)) - this.fov) * ZOOMED_TRANSITION_MODIFIER;
+            callbackInfo.cancel();
+            return;
+        }
+
+        if (!context.vanillaInHand()) {
+            this.oldFov = this.fov;
+            this.fov += ((1.0f / VANILLA_ZOOM) - this.fov) * ZOOMED_TRANSITION_MODIFIER;
+            callbackInfo.cancel();
+        }
+
+    }
+
+    @Unique
+    private static ScopedZoomContext immersiveZoom$getScopedZoomContext() {
         LocalPlayer player = ClientUtils.getLocalPlayerCast();
-        if (player == null || ClientUtils.isThirdPersonFront()) return;
+        if (player == null || ClientUtils.isThirdPersonFront()) return null;
 
         boolean vanillaInHand = immersiveZoom$isVanillaInHandScoping(player);
         boolean hotkeyInSlot  = immersiveZoom$isHotkeySlotScoping(player);
-        if (!vanillaInHand && !hotkeyInSlot) return;
+        if (!vanillaInHand && !hotkeyInSlot) return null;
 
-        ItemStack active = vanillaInHand ? player.getUseItem()
+        ItemStack active = vanillaInHand
+                ? player.getUseItem()
                 : player.getInventory().getItem(SPYGLASS_SLOT_INDEX);
-        if (active.isEmpty() || !(active.getItem() instanceof AttunedSpyglass)) return;
 
-        Float stored = active.get(DataComponentRegistry.ZOOM_FACTOR.get());
-        float magnification = stored != null
-                ? Mth.clamp(stored, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX)
-                : ATTUNED_ZOOM_DEFAULT;
+        if (active.isEmpty() || !SpyglassUtils.isSpyglass(active)) return null;
 
-        this.oldFov = this.fov;
-        this.fov += ((1.0f / Math.max(1.0f, magnification)) - this.fov) * ZOOMED_TRANSITION_MODIFIER;
-        callbackInfo.cancel();
+        return new ScopedZoomContext(player, active, vanillaInHand);
     }
 
     @Unique

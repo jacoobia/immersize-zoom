@@ -1,6 +1,5 @@
 package com.jacoobia.immersivezoom.datagen;
 
-import com.jacoobia.immersivezoom.common.Constants;
 import com.jacoobia.immersivezoom.datagen.providers.ModItemModelProvider;
 import com.jacoobia.immersivezoom.datagen.providers.ModRecipeProvider;
 import net.minecraft.core.HolderLookup;
@@ -13,7 +12,9 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
+
+@EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 
     @SubscribeEvent

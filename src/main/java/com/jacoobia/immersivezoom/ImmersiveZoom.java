@@ -2,7 +2,6 @@ package com.jacoobia.immersivezoom;
 
 import com.jacoobia.immersivezoom.common.registry.DataComponentRegistry;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
-import com.jacoobia.immersivezoom.server.SpyglassAttachments;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -25,7 +24,6 @@ public class ImmersiveZoom {
         LOGGER.info("[ImmersiveZoom] Registering custom registries...");
         ItemRegistry.init(modEventBus);
         DataComponentRegistry.init(modEventBus);
-        SpyglassAttachments.init(modEventBus);
 
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);

@@ -2,6 +2,7 @@ package com.jacoobia.immersivezoom.common.utils;
 
 public class NumberUtils {
 
+    public static final int INT_ZERO = 0;
     public static final float FLOAT_ZERO = 0.0f;
 
     /**
