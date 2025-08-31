@@ -1,5 +1,6 @@
 package com.jacoobia.immersivezoom;
 
+import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
 import com.jacoobia.immersivezoom.common.registry.DataComponentRegistry;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.jacoobia.immersivezoom.common.registry.LootModifierRegistry;
@@ -26,6 +27,7 @@ public class ImmersiveZoom {
         ItemRegistry.init(modEventBus);
         DataComponentRegistry.init(modEventBus);
         LootModifierRegistry.init(modEventBus);
+        AttachmentRegistry.init(modEventBus);
 
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);

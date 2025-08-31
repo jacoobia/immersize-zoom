@@ -32,13 +32,7 @@ public class InventoryMenuMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void addCustomSlot(Inventory playerInventory, boolean active, Player owner, CallbackInfo callback) {
-        SpyglassSlot slot = new SpyglassSlot(playerInventory, SPYGLASS_SLOT_INDEX, X_POSITION, Y_POSITION) {
-            @Override
-            public boolean mayPlace(@NotNull ItemStack stack) {
-                return CollectionUtils.contains(ZOOM_ITEMS, stack.getItem());
-            }
-        };
-
+        SpyglassSlot slot = new SpyglassSlot(playerInventory, SPYGLASS_SLOT_INDEX, X_POSITION, Y_POSITION, owner);
         ((InventoryMenuAccessor)this).invokeAddSlot(slot);
     }
 

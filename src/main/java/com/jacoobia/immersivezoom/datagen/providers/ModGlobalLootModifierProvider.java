@@ -27,7 +27,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 new AddItemModifier(
                         new LootItemCondition[] {
                                 LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.AMETHYST_CLUSTER).build(),
-                                LootItemRandomChanceCondition.randomChance(0.1f).build()
+                                LootItemRandomChanceCondition.randomChance(0.33f).build()
                 }, new Item[] { ItemRegistry.UNATTUNED_AMETHYST_SHARD.get() }, true));
     }
 

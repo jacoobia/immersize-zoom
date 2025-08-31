@@ -18,4 +18,12 @@ public class KeyMapRegistry {
                     DEFAULT_ZOOM_KEY,
                     CATEGORY.getString());
 
+    public static final KeyMapping TOGGLE_TEMP_SCREEN = new KeyMapping(
+            "key.immersivezoom.toggle_temp_screen",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_P,
+            CATEGORY.getString()
+    );
+
 }

@@ -23,7 +23,7 @@ public class ClientHudSubscriber {
         Player player = ClientUtils.getLocalPlayer();
         if (player == null) return;
 
-        if (ClientUtils.isThirdPersonFront()) return;
+        if (ClientUtils.isThirdPerson()) return;
 
         if (SpyglassUtils.isZoomingWithAttunedSpyglass() || player.isScoping()) {
             if (!event.getName().equals(VanillaGuiLayers.CAMERA_OVERLAYS))

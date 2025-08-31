@@ -1,5 +1,7 @@
 package com.jacoobia.immersivezoom.common.network;
 
+import com.jacoobia.immersivezoom.client.network.handlers.ClientSpyglassSlotSyncPacketHandler;
+import com.jacoobia.immersivezoom.common.network.packet.SpyglassSlotSyncPacket;
 import com.jacoobia.immersivezoom.server.network.handlers.ServerSpyglassScopePacketHandler;
 import com.jacoobia.immersivezoom.server.network.handlers.ServerSpyglassZoomPacketHandler;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
@@ -27,7 +29,13 @@ public class PacketEventBusSubscriber {
         registrar.playToServer(
                 SpyglassZoomPacket.TYPE,
                 SpyglassZoomPacket.STREAM_CODEC,
-                new ServerSpyglassZoomPacketHandler()::handle
+                ServerSpyglassZoomPacketHandler.get()::handle
+        );
+
+        registrar.playToClient(
+                SpyglassSlotSyncPacket.TYPE,
+                SpyglassSlotSyncPacket.STREAM_CODEC,
+                ClientSpyglassSlotSyncPacketHandler.get()::handle
         );
 
     }

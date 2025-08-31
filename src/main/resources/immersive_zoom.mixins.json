@@ -17,7 +17,8 @@
     "common.InventoryMenuMixin",
     "common.InventoryMixin",
     "common.LivingEntityMixin",
-    "common.PlayerMixin"
+    "common.PlayerMixin",
+    "accessors.ItemInHandAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -67,7 +67,7 @@ public class GameRendererMixin {
     @Unique
     private static ScopedZoomContext immersiveZoom$getScopedZoomContext() {
         LocalPlayer player = ClientUtils.getLocalPlayerCast();
-        if (player == null || ClientUtils.isThirdPersonFront()) return null;
+        if (player == null || ClientUtils.isThirdPerson()) return null;
 
         boolean vanillaInHand = immersiveZoom$isVanillaInHandScoping(player);
         boolean hotkeyInSlot  = immersiveZoom$isHotkeySlotScoping(player);

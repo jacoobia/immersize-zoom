@@ -23,14 +23,13 @@ public class ClientTickSubscriber {
         LocalPlayer player = ClientUtils.getLocalPlayerCast();
         if (player == null) return;
 
-        boolean isFront = ClientUtils.isThirdPersonFront();
         boolean keyDown = ZOOM_KEYMAPPING.isDown();
 
         boolean hasSpyglass =
                 SpyglassUtils.isSpyglass(player.getUseItem())
                         || SpyglassUtils.isSpyglass(player.getInventory().getItem(SPYGLASS_SLOT_INDEX));
 
-        boolean wantsScope = keyDown && !isFront && hasSpyglass;
+        boolean wantsScope = keyDown && hasSpyglass;
 
         if (wantsScope != wasScoping) {
             if (wantsScope) {

@@ -18,7 +18,7 @@ public class PlayerMixin {
     private void modifyIsScoping(CallbackInfoReturnable<Boolean> cir) {
         Player player = (Player) (Object) this;
 
-        if (ClientUtils.isThirdPersonFront()) {
+        if (ClientUtils.isThirdPerson()) {
             cir.setReturnValue(false);
             cir.cancel();
             return;

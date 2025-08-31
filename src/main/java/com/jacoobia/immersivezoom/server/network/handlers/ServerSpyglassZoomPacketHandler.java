@@ -16,6 +16,12 @@ import static com.jacoobia.immersivezoom.common.utils.ItemUtils.resolveSpyglassF
 
 public class ServerSpyglassZoomPacketHandler implements PacketHandler<SpyglassZoomPacket> {
 
+    private static final ServerSpyglassZoomPacketHandler INSTANCE = new ServerSpyglassZoomPacketHandler();
+
+    public static ServerSpyglassZoomPacketHandler get() {
+        return INSTANCE;
+    }
+
     @Override
     public void handle(SpyglassZoomPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {

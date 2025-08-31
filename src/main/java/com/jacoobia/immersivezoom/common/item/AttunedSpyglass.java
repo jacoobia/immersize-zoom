@@ -6,6 +6,8 @@ import com.jacoobia.immersivezoom.common.utils.ItemUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -15,6 +17,7 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpyglassItem;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +29,7 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 
 public class AttunedSpyglass extends SpyglassItem {
 
-    public static final int USE_DURATION = 1400;
+    public static final int USE_DURATION = 1200;
 
     public AttunedSpyglass() {
         super(new Item.Properties().stacksTo(INTEGER_ONE));
