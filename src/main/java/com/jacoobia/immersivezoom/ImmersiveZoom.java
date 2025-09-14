@@ -29,6 +29,8 @@ public class ImmersiveZoom {
         LootModifierRegistry.init(modEventBus);
         AttachmentRegistry.init(modEventBus);
 
+        System.out.println("frick");
+
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);
         LOGGER.info("[ImmersiveZoom] Mod setup complete in {}ms", duration.toMillis());
