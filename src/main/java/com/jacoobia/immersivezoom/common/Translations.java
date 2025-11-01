@@ -9,6 +9,12 @@ public class Translations {
         public static final Component ZOOM = Component.translatable("key.immersive_zoom.keybinds.keybind.zoom");
     }
 
+    public static class Lore {
+        public static Component attuneLore = Component.translatable("lore.immersive_zoom.attune");
+        public static Component midnight = Component.translatable("lore.immersive_zoom.midnight");
+        public static Component mined = Component.translatable("lore.immersive_zoom.mined");
+    }
+
     public static class Tooltips {
         public static Component zoomLevel(double zoomLevel) {
             return Component.translatable("tooltip.immersive_zoom.zoom_level", zoomLevel);
