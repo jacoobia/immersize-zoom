@@ -20,7 +20,7 @@ public class AttachmentRegistry {
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<SpyglassSlotData>> HIP_SPYGLASS =
             ATTACHMENTS.register("hip_spyglass", () ->
-                    AttachmentType.<SpyglassSlotData>builder(() -> SpyglassSlotData.EMPTY).build()
+                    AttachmentType.builder(() -> SpyglassSlotData.EMPTY).build()
             );
 
 }

@@ -4,6 +4,10 @@ import com.jacoobia.immersivezoom.client.ui.container.SpyglassSlot;
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassSlotSyncPacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.OutgoingChatMessage;
+import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -33,6 +37,13 @@ public class ServerSyncPointSubscriber {
 
     @SubscribeEvent
     public static void onChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            SpyglassSlot.syncSlotContent(player);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onJoinWorld(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             SpyglassSlot.syncSlotContent(player);
         }

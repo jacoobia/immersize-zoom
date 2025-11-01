@@ -2,12 +2,9 @@ package com.jacoobia.immersivezoom.common.item;
 
 import com.jacoobia.immersivezoom.client.ui.tooltip.AttunedZoomBarTooltip;
 import com.jacoobia.immersivezoom.common.utils.DataUtils;
-import com.jacoobia.immersivezoom.common.utils.ItemUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -17,7 +14,6 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpyglassItem;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,10 +37,8 @@ public class AttunedSpyglass extends SpyglassItem {
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
-        ItemStack heldStack = player.getItemInHand(hand);
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         if (!level.isClientSide) {
-            ItemUtils.setItemId(heldStack);
             if (player instanceof ServerPlayer serverPlayer) {
                 serverPlayer.getInventory().setChanged();
             }

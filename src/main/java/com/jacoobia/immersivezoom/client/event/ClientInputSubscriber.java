@@ -4,10 +4,8 @@ import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassZoomPacket;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.utils.DataUtils;
-import com.jacoobia.immersivezoom.common.utils.ItemUtils;
 import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
@@ -16,8 +14,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
-
-import java.util.UUID;
 
 import static com.jacoobia.immersivezoom.client.registry.KeyMapRegistry.ZOOM_KEYMAPPING;
 import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_DEFAULT;
@@ -62,8 +58,7 @@ public class ClientInputSubscriber {
 
             activeSpyglassStack.set(ZOOM_FACTOR, next);
 
-            UUID stackId = ItemUtils.getStackId(activeSpyglassStack);
-            PacketDistributor.sendToServer(SpyglassZoomPacket.create(stackId, next));
+            PacketDistributor.sendToServer(SpyglassZoomPacket.create(!inHandScoping, next));
         }
     }
 }

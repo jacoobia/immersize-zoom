@@ -9,6 +9,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+/**
+ * Deprecated in favour of just sending a bool since the game already knows
+ * which item is being used if it isn't being used from our custom slot
+ */
+@Deprecated
 public class CustomCodecs {
 
     /**
@@ -29,7 +34,7 @@ public class CustomCodecs {
     /**
      * NBT Codec for a {@link UUID}
      */
-    public static final Codec<UUID> UUIO_NBT_CODEC =
+    public static final Codec<UUID> UUID_NBT_CODEC =
             Codec.STRING.comapFlatMap(
                     s -> {
                         try {

@@ -60,8 +60,8 @@ public class SpyglassSlot extends Slot {
         if (owner.level().isClientSide) return;
         if (!(owner instanceof ServerPlayer player)) return;
 
-        ItemStack current = this.getItem();
-        ServerUtils.setHipItem(player, current.isEmpty() ? ItemStack.EMPTY : current.copy());
+//        ItemStack current = this.getItem();
+//        ServerUtils.setHipItem(player, current.isEmpty() ? ItemStack.EMPTY : current.copy());
         syncSlotContent(player);
     }
 

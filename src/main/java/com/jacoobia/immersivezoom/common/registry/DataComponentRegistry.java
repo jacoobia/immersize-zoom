@@ -26,12 +26,6 @@ public class DataComponentRegistry {
         return DATA_COMPONENT_TYPES.register(name, () -> builder.apply(DataComponentType.builder()).build());
     }
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<java.util.UUID>> STACK_ID =
-            register("iz_stack_id", b -> b
-                    .persistent(CustomCodecs.UUIO_NBT_CODEC)
-                    .networkSynchronized(CustomCodecs.UUID_STREAM_CODEC));
-
-
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Float>> ZOOM_FACTOR = register(
             "zoom_factor",
             builder -> builder
