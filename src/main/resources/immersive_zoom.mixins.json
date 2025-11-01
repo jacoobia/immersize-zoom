@@ -6,19 +6,15 @@
   "refmap": "immersivezoom.refmap.json",
   "mixins": [
     "accessors.InventoryMenuAccessor",
-    "client.AbstractContainerScreenMixin",
     "common.InventoryMenuMixin",
     "common.InventoryMixin"
   ],
   "client": [
-    "accessors.InventoryMenuAccessor",
+    "accessors.ItemInHandAccessor",
     "client.AbstractContainerScreenMixin",
     "client.GameRendererMixin",
-    "common.InventoryMenuMixin",
-    "common.InventoryMixin",
     "common.LivingEntityMixin",
-    "common.PlayerMixin",
-    "accessors.ItemInHandAccessor"
+    "common.PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

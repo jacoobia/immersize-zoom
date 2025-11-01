@@ -118,3 +118,4 @@ run/
 *.architectury-
 /src/generated/
 /src/generated/**/*.json
+/run-client2/**
