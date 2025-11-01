@@ -11,6 +11,13 @@ import java.util.UUID;
 
 import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 
+/**
+ * Lets the server/client know if the zoom is coming from the special slot
+ * or from the item in the players hand, now skips all the confusing UUID tracking
+ * and lookup since only spyglass can be in use at any one time
+ * @param fromSlot true/false if the spyglass in use is in the custom spyglass slot
+ * @param value the zoom factor of that specific spyglass
+ */
 public record SpyglassZoomPacket(boolean fromSlot,
                                  float value) implements CustomPacketPayload {
 
