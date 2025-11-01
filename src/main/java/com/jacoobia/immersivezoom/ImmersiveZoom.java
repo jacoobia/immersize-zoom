@@ -25,7 +25,7 @@ public class ImmersiveZoom {
 
         LOGGER.info("[ImmersiveZoom] Registering custom registries...");
         ItemRegistry.init(modEventBus);
-//        DataComponentRegistry.init(modEventBus);
+        DataComponentRegistry.init(modEventBus);
         LootModifierRegistry.init(modEventBus);
         AttachmentRegistry.init(modEventBus);
 

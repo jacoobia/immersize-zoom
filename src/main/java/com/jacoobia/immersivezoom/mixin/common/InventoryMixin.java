@@ -145,22 +145,22 @@ public class InventoryMixin {
     }
 
     @Inject(method = "save", at = @At("RETURN"))
-    private void saveExtraSlot(ListTag tag, CallbackInfoReturnable<ListTag> callback) {
+    private void saveExtraSlot(ListTag listTag, CallbackInfoReturnable<ListTag> callback) {
         ItemStack spyglassStack = immersiveZoom$spyglassSlot.getFirst();
         if (!spyglassStack.isEmpty()) {
             CompoundTag compoundtag = new CompoundTag();
-            compoundtag.putByte("spyglass_slot", (byte) SPYGLASS_SLOT_INDEX);
-            tag.add(immersiveZoom$spyglassSlot.get(INTEGER_ZERO).save(player.registryAccess(), compoundtag));
+            compoundtag.putByte("Slot", (byte) SPYGLASS_SLOT_INDEX);
+            listTag.add(spyglassStack.save(player.registryAccess(), compoundtag));
         }
-//        callback.setReturnValue(tag);
     }
 
     @Inject(method = "load", at = @At("RETURN"))
     private void loadExtraSlot(ListTag listTag, CallbackInfo callback) {
+        immersiveZoom$spyglassSlot.set(INTEGER_ZERO, EMPTY);
         for (int i = 0; i < listTag.size(); i++) {
             CompoundTag compoundTag = listTag.getCompound(i);
-            if(compoundTag.contains("spyglass_slot")) {
-                ItemStack itemstack = ItemStack.parse(player.registryAccess(), compoundTag).orElse(ItemStack.EMPTY);
+            if((compoundTag.getByte("Slot") & 255) == SPYGLASS_SLOT_INDEX) {
+                ItemStack itemstack = ItemStack.parse(player.registryAccess(), compoundTag).orElse(EMPTY);
                 immersiveZoom$spyglassSlot.set(INTEGER_ZERO, itemstack);
             }
         }
