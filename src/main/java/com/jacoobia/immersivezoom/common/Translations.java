@@ -17,13 +17,7 @@ public class Translations {
         public static Component mined = Component.translatable("lore.immersive_zoom.mined");
     }
 
-    public static class Tooltips {
-        public static Component zoomLevel(double zoomLevel) {
-            return Component.translatable("tooltip.immersive_zoom.zoom_level", zoomLevel);
-        }
-    }
-
-    public static class Advcancements {
+    public static class Advancements {
         public static Component rootName = Component.translatable("advancements.immersive_zoom.root.title");
         public static Component rootDescription = Component.translatable("advancements.immersive_zoom.root.description");
 

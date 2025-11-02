@@ -10,11 +10,11 @@ public class Constants {
 
     public static final float ATTUNED_ZOOM_MIN = 3.0f;
     public static final float ATTUNED_ZOOM_MAX = 30.0f;
-    public static final float ATTUNED_ZOOM_DEFAULT = 3.0f;
+    public static final float ATTUNED_ZOOM_DEFAULT = 10.0f;
 
     public static final float VANILLA_ZOOM = 10.0f;
 
-    public static final float ZOOM_STEP = 0.1f;
+    public static final float ZOOM_STEP = 0.25f;
     public static final float QUICK_ZOOM_STEP = 0.5f;
 
     public static final float ZOOMED_TRANSITION_MODIFIER = 0.5f;

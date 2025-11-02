@@ -39,8 +39,8 @@ public class ModAdvancementProvider extends AdvancementProvider {
 
             var root = Advancement.Builder.advancement()
                     .display(new ItemStack(Items.SPYGLASS),
-                            Translations.Advcancements.rootName,
-                            Translations.Advcancements.rootDescription,
+                            Translations.Advancements.rootName,
+                            Translations.Advancements.rootDescription,
                             BACKGROUND,
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("has_item",
@@ -52,8 +52,8 @@ public class ModAdvancementProvider extends AdvancementProvider {
             var amethyst = Advancement.Builder.advancement()
                     .parent(root)
                     .display(new ItemStack(ItemRegistry.UNATTUNED_AMETHYST_SHARD.get()),
-                            Translations.Advcancements.unattunedAmethyst,
-                            Translations.Advcancements.unattunedAmethystDescription,
+                            Translations.Advancements.unattunedAmethyst,
+                            Translations.Advancements.unattunedAmethystDescription,
                             null, AdvancementType.TASK,
                             true, true, false)
                     .addCriterion("has_item",
@@ -65,8 +65,8 @@ public class ModAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(amethyst)
                     .display(new ItemStack(ItemRegistry.ATTUNED_AMETHYST_SHARD.get()),
-                            Translations.Advcancements.attunedAmethyst,
-                            Translations.Advcancements.attunedAmethystDescription,
+                            Translations.Advancements.attunedAmethyst,
+                            Translations.Advancements.attunedAmethystDescription,
                             null, AdvancementType.TASK,
                             true, true, false)
                     .addCriterion("has_item",
@@ -78,8 +78,8 @@ public class ModAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(root)
                     .display(new ItemStack(ItemRegistry.COPPER_FOCUS.get()),
-                            Translations.Advcancements.copperFocus,
-                            Translations.Advcancements.copperFocusDescription,
+                            Translations.Advancements.copperFocus,
+                            Translations.Advancements.copperFocusDescription,
                             null, AdvancementType.TASK,
                             true, true, false)
                     .addCriterion("has_item",
@@ -91,8 +91,8 @@ public class ModAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(root)
                     .display(new ItemStack(ItemRegistry.ATTUNED_SPYGLASS.get()),
-                            Translations.Advcancements.attunedSpyglassName,
-                            Translations.Advcancements.attunedSpyglassDescription,
+                            Translations.Advancements.attunedSpyglassName,
+                            Translations.Advancements.attunedSpyglassDescription,
                             null, AdvancementType.GOAL,
                             true, true, false)
                     .addCriterion("has_item",

@@ -1,6 +1,5 @@
 package com.jacoobia.immersivezoom.common.registry;
 
-import com.jacoobia.immersivezoom.common.network.Codec.CustomCodecs;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -31,13 +30,6 @@ public class DataComponentRegistry {
             builder -> builder
                     .persistent(ExtraCodecs.POSITIVE_FLOAT)
                     .networkSynchronized(ByteBufCodecs.FLOAT)
-    );
-
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> TESTER = register(
-            "tester",
-            builder -> builder
-                    .persistent(ExtraCodecs.NON_NEGATIVE_INT)
-                    .networkSynchronized(ByteBufCodecs.INT)
     );
 
 }

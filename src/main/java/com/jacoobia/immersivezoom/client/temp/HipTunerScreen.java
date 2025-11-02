@@ -1,7 +1,5 @@
 package com.jacoobia.immersivezoom.client.temp;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -9,7 +7,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
-import static javax.swing.plaf.basic.BasicGraphicsUtils.drawString;
 
 public class HipTunerScreen extends Screen {
     private static final double STEP = 0.1;

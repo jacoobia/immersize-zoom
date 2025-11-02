@@ -15,9 +15,10 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderHandEvent;
 import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 
+import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_INDEX;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientRenderSubscriber {
 
     @SubscribeEvent

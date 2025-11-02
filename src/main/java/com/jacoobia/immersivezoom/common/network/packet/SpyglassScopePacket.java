@@ -1,6 +1,6 @@
 package com.jacoobia.immersivezoom.common.network.packet;
 
-import com.jacoobia.immersivezoom.common.network.Opcode.SpyglassOpcode;
+import com.jacoobia.immersivezoom.common.network.opcode.SpyglassOpcode;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
