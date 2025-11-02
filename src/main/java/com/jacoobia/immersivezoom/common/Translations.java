@@ -5,8 +5,10 @@ import net.minecraft.network.chat.Component;
 public class Translations {
 
     public static class Keybindings {
-        public static final Component CATEGORY = Component.translatable("key.immersive_zoom.keybinds.category");
-        public static final Component ZOOM = Component.translatable("key.immersive_zoom.keybinds.keybind.zoom");
+        // Plain keys, not Components: KeyMapping translates these itself, and saves them in options.txt
+        public static final String CATEGORY = "key.immersive_zoom.keybinds.category";
+        public static final String ZOOM = "key.immersive_zoom.keybinds.keybind.zoom";
+        public static final String TOGGLE_TEMP_SCREEN = "key.immersive_zoom.keybinds.keybind.toggle_temp_screen";
     }
 
     public static class Lore {

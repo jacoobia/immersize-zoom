@@ -14,7 +14,7 @@ public final class Render {
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post e) {
-        if (KeyMapRegistry.TOGGLE_TEMP_SCREEN.consumeClick()) {
+        if (KeyMapRegistry.TOGGLE_TEMP_SCREEN_KEYMAPPING.consumeClick()) {
             Minecraft.getInstance().setScreen(new HipTunerScreen());
         }
     }
