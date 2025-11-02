@@ -47,7 +47,7 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
         ItemStack stack = new ItemStack(item);
         if (stack.isEmpty()) return;
 
-        if (KeyMapRegistry.ZOOM_KEYMAPPING.isDown()) {
+        if (player.isLocalPlayer() && KeyMapRegistry.ZOOM_KEYMAPPING.isDown()) {
             pose.pushPose();
 
             var arm = (data.side() == HipSide.LEFT) ? HumanoidArm.LEFT : HumanoidArm.RIGHT;

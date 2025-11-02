@@ -38,7 +38,7 @@ public abstract class LivingEntityMixin {
 
     @Unique
     private boolean immersiveZoom$shouldKeepUsingItem(Player player) {
-        if(!player.isScoping()) return false;
+        if(!player.isLocalPlayer() || !player.isScoping()) return false;
         return ZOOM_KEYMAPPING.isDown() && !player.getInventory().getItem(SPYGLASS_SLOT_INDEX).isEmpty();
     }
 

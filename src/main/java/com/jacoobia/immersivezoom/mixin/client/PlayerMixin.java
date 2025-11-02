@@ -18,7 +18,7 @@ public class PlayerMixin {
     private void modifyIsScoping(CallbackInfoReturnable<Boolean> cir) {
         Player player = (Player) (Object) this;
 
-        if (ClientUtils.isThirdPerson()) {
+        if (player.isLocalPlayer() && ClientUtils.isThirdPerson()) {
             cir.setReturnValue(false);
             cir.cancel();
             return;
@@ -30,7 +30,7 @@ public class PlayerMixin {
         boolean hasSpyglassInSpecialSlot =
                 SpyglassUtils.isSpyglass(player.getInventory().getItem(SPYGLASS_SLOT_INDEX));
 
-        boolean isZoomHotkeyHeld = KeyMapRegistry.ZOOM_KEYMAPPING.isDown();
+        boolean isZoomHotkeyHeld = player.isLocalPlayer() && KeyMapRegistry.ZOOM_KEYMAPPING.isDown();
 
         boolean shouldScope = isUsingSpyglassInHand || (isZoomHotkeyHeld && hasSpyglassInSpecialSlot);
 

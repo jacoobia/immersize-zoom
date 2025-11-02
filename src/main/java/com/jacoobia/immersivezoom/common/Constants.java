@@ -19,7 +19,7 @@ public class Constants {
 
     public static final float ZOOMED_TRANSITION_MODIFIER = 0.5f;
 
-    public static final int SPYGLASS_SLOT_INDEX = 99;
+    public static final int SPYGLASS_SLOT_INDEX = 41;
 
     public static final int DEFAULT_ZOOM_KEY = InputConstants.KEY_Z;
 

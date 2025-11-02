@@ -8,7 +8,6 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,7 +23,7 @@ public class ClientRenderSubscriber {
 
     @SubscribeEvent
     public static void onPlayerRenderPre(RenderPlayerEvent.Pre event) {
-        if (shouldNotPlayAnimation()) return;
+        if (!event.getEntity().isLocalPlayer() || shouldNotPlayAnimation()) return;
 
         var model = (HumanoidModel<?>) event.getRenderer().getModel();
         event.getEntity().getPersistentData().putString("scope_pose_right",
@@ -37,7 +36,7 @@ public class ClientRenderSubscriber {
 
     @SubscribeEvent
     public static void onPlayerRenderPost(RenderPlayerEvent.Post event) {
-        if (shouldNotPlayAnimation()) return;
+        if (!event.getEntity().isLocalPlayer() || shouldNotPlayAnimation()) return;
 
         var model = (HumanoidModel<?>) event.getRenderer().getModel();
         var tag = event.getEntity().getPersistentData();
