@@ -4,12 +4,14 @@ import com.jacoobia.immersivezoom.common.container.SpyglassSlot;
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassSlotSyncPacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
+import com.jacoobia.immersivezoom.server.utils.ServerUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
+import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_INDEX;
 
 /**
  * An event subscriber for all client sync point related events
@@ -20,6 +22,7 @@ public class ServerSyncPointSubscriber {
     @SubscribeEvent
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            ServerUtils.setHipItem(player, player.getInventory().getItem(SPYGLASS_SLOT_INDEX));
             SpyglassSlot.syncSlotContent(player);
         }
     }
@@ -27,6 +30,7 @@ public class ServerSyncPointSubscriber {
     @SubscribeEvent
     public static void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            ServerUtils.setHipItem(player, player.getInventory().getItem(SPYGLASS_SLOT_INDEX));
             SpyglassSlot.syncSlotContent(player);
         }
     }

@@ -4,6 +4,7 @@ import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassSlotSyncPacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
+import com.jacoobia.immersivezoom.server.utils.ServerUtils;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -58,8 +59,8 @@ public class SpyglassSlot extends Slot {
         if (owner.level().isClientSide) return;
         if (!(owner instanceof ServerPlayer player)) return;
 
-//        ItemStack current = this.getItem();
-//        ServerUtils.setHipItem(player, current.isEmpty() ? ItemStack.EMPTY : current.copy());
+        ItemStack current = this.getItem();
+        ServerUtils.setHipItem(player, current.isEmpty() ? ItemStack.EMPTY : current.copy());
         syncSlotContent(player);
     }
 
