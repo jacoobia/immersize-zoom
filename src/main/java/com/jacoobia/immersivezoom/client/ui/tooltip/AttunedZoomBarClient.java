@@ -1,5 +1,6 @@
 package com.jacoobia.immersivezoom.client.ui.tooltip;
 
+import com.jacoobia.immersivezoom.common.data.AttunedZoomBarTooltip;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;

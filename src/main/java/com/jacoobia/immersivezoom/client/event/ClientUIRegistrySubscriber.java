@@ -1,7 +1,7 @@
 package com.jacoobia.immersivezoom.client.event;
 
 import com.jacoobia.immersivezoom.client.ui.tooltip.AttunedZoomBarClient;
-import com.jacoobia.immersivezoom.client.ui.tooltip.AttunedZoomBarTooltip;
+import com.jacoobia.immersivezoom.common.data.AttunedZoomBarTooltip;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

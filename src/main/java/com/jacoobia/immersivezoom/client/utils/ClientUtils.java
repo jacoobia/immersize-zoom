@@ -1,11 +1,10 @@
 package com.jacoobia.immersivezoom.client.utils;
 
+import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 
 public class ClientUtils {
 
@@ -27,24 +26,21 @@ public class ClientUtils {
     }
 
     /**
+     * Checks if the local player is currently zooming with an attuned spyglass
+     * @return true if the player is using an attuned spyglass, false otherwise
+     */
+    public static boolean isZoomingWithAttunedSpyglass() {
+        Player player = getLocalPlayer();
+        return player != null && player.getUseItem().is(ItemRegistry.ATTUNED_SPYGLASS.get());
+    }
+
+    /**
      * Check if the player is in third person front view
      * @return true if the player is in third person front view
      */
     public static boolean isThirdPerson() {
         Minecraft minecraft = Minecraft.getInstance();
         return minecraft.options.getCameraType() != CameraType.FIRST_PERSON;
-    }
-
-    /**
-     * Returns an approximate world position of the player's main hand.
-     * @param player The player entity.
-     * @return A Vec3 in world space.
-     */
-    public static Vec3 getEstimatedHandPosition(Player player) {
-        Vec3 eyePos = player.getEyePosition();
-        Vec3 look = player.getLookAngle();
-        Vec3 side = look.cross(new Vec3(0, 1, 0)).normalize().scale(0.35);
-        return eyePos.add(look.scale(0.6)).add(side).add(0, -0.4, 0);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.jacoobia.immersivezoom.mixin.common;
 
-import com.jacoobia.immersivezoom.common.Constants;
-import com.jacoobia.immersivezoom.common.utils.CollectionUtils;
+import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -82,7 +81,7 @@ public class InventoryMixin {
      */
     @Inject(method = "setItem", at = @At("HEAD"), cancellable = true)
     private void setItemExtraSlot(int index, ItemStack stack, CallbackInfo callback) {
-        if (index == SPYGLASS_SLOT_INDEX && CollectionUtils.contains(Constants.ZOOM_ITEMS, stack.getItem())) {
+        if (index == SPYGLASS_SLOT_INDEX && SpyglassUtils.isSpyglass(stack)) {
             immersiveZoom$spyglassSlot.set(INTEGER_ZERO, stack);
             callback.cancel();
         }

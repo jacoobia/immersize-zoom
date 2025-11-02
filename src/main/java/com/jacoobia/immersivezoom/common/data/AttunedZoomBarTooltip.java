@@ -1,4 +1,4 @@
-package com.jacoobia.immersivezoom.client.ui.tooltip;
+package com.jacoobia.immersivezoom.common.data;
 
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 

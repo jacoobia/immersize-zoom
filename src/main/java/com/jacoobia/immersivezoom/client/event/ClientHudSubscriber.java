@@ -1,7 +1,6 @@
 package com.jacoobia.immersivezoom.client.event;
 
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
-import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -25,7 +24,7 @@ public class ClientHudSubscriber {
 
         if (ClientUtils.isThirdPerson()) return;
 
-        if (SpyglassUtils.isZoomingWithAttunedSpyglass() || player.isScoping()) {
+        if (ClientUtils.isZoomingWithAttunedSpyglass() || player.isScoping()) {
             if (!event.getName().equals(VanillaGuiLayers.CAMERA_OVERLAYS))
                 event.setCanceled(true);
         }

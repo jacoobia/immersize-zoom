@@ -1,4 +1,4 @@
-package com.jacoobia.immersivezoom.mixin.common;
+package com.jacoobia.immersivezoom.mixin.client;
 
 import com.jacoobia.immersivezoom.client.registry.KeyMapRegistry;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;

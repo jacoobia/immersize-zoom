@@ -1,9 +1,9 @@
 package com.jacoobia.immersivezoom.server.events;
 
-import com.jacoobia.immersivezoom.client.utils.ClientUtils;
-import com.jacoobia.immersivezoom.client.utils.ParticleUtil;
+import com.jacoobia.immersivezoom.common.utils.ParticleUtil;
 import com.jacoobia.immersivezoom.common.Translations;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
+import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import com.jacoobia.immersivezoom.server.utils.TimeUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -35,7 +35,7 @@ public class ServerInteractSubscriber {
                 player.displayClientMessage(Translations.Lore.attuneLore, true);
 
                 ItemStack result = ItemRegistry.ATTUNED_AMETHYST_SHARD.get().getDefaultInstance();
-                Vec3 playerPos = ClientUtils.getEstimatedHandPosition(player);
+                Vec3 playerPos = SpyglassUtils.getEstimatedHandPosition(player);
 
                 itemStack.shrink(INT_ONE);
                 level.playSound(null, player.blockPosition(),

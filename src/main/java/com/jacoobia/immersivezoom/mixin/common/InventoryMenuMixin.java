@@ -1,13 +1,10 @@
 package com.jacoobia.immersivezoom.mixin.common;
 
-import com.jacoobia.immersivezoom.client.ui.container.SpyglassSlot;
-import com.jacoobia.immersivezoom.common.utils.CollectionUtils;
+import com.jacoobia.immersivezoom.common.container.SpyglassSlot;
 import com.jacoobia.immersivezoom.mixin.accessors.InventoryMenuAccessor;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_INDEX;
-import static com.jacoobia.immersivezoom.common.Constants.ZOOM_ITEMS;
 
 /**
  * Uses {@link InventoryMenuAccessor} to add the spyglass slot to the player's inventory

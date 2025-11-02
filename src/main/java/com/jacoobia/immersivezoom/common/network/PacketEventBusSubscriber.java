@@ -35,7 +35,9 @@ public class PacketEventBusSubscriber {
         registrar.playToClient(
                 SpyglassSlotSyncPacket.TYPE,
                 SpyglassSlotSyncPacket.STREAM_CODEC,
-                ClientSpyglassSlotSyncPacketHandler.get()::handle
+                // Lambda, not get()::handle: a method reference calls get() right now and loads the
+                // client handler class on a dedicated server. The lambda body only runs on the client.
+                (packet, context) -> ClientSpyglassSlotSyncPacketHandler.get().handle(packet, context)
         );
 
     }

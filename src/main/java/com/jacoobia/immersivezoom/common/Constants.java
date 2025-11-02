@@ -1,10 +1,7 @@
 package com.jacoobia.immersivezoom.common;
 
-import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 
 public class Constants {
 
@@ -31,10 +28,5 @@ public class Constants {
 
     public static final ResourceLocation EMPTY_SLOT_SPYGLASS =
             ResourceLocation.fromNamespaceAndPath(MOD_ID,"item/empty_slot_spyglass");
-
-    public static final Item[] ZOOM_ITEMS = new Item[] {
-            ItemRegistry.ATTUNED_SPYGLASS.get(),
-            Items.SPYGLASS
-    };
 
 }

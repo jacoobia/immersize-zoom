@@ -1,10 +1,9 @@
-package com.jacoobia.immersivezoom.client.ui.container;
+package com.jacoobia.immersivezoom.common.container;
 
+import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassSlotSyncPacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
-import com.jacoobia.immersivezoom.common.utils.CollectionUtils;
-import com.jacoobia.immersivezoom.server.utils.ServerUtils;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import static com.jacoobia.immersivezoom.common.Constants.EMPTY_SLOT_SPYGLASS;
-import static com.jacoobia.immersivezoom.common.Constants.ZOOM_ITEMS;
 import static net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS;
 
 public class SpyglassSlot extends Slot {
@@ -32,7 +30,7 @@ public class SpyglassSlot extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return CollectionUtils.contains(ZOOM_ITEMS, stack.getItem());
+        return SpyglassUtils.isSpyglass(stack);
     }
 
     @Override

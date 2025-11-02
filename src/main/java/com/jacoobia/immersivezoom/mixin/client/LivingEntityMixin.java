@@ -1,4 +1,4 @@
-package com.jacoobia.immersivezoom.mixin.common;
+package com.jacoobia.immersivezoom.mixin.client;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;

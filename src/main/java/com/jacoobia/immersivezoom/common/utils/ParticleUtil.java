@@ -1,4 +1,4 @@
-package com.jacoobia.immersivezoom.client.utils;
+package com.jacoobia.immersivezoom.common.utils;
 
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.TickTask;

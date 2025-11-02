@@ -13,8 +13,8 @@
     "accessors.ItemInHandAccessor",
     "client.AbstractContainerScreenMixin",
     "client.GameRendererMixin",
-    "common.LivingEntityMixin",
-    "common.PlayerMixin"
+    "client.LivingEntityMixin",
+    "client.PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

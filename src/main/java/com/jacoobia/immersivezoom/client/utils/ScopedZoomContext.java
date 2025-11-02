@@ -1,4 +1,4 @@
-package com.jacoobia.immersivezoom.common.utils;
+package com.jacoobia.immersivezoom.client.utils;
 
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.item.ItemStack;

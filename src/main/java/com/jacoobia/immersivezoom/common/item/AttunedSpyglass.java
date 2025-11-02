@@ -1,6 +1,6 @@
 package com.jacoobia.immersivezoom.common.item;
 
-import com.jacoobia.immersivezoom.client.ui.tooltip.AttunedZoomBarTooltip;
+import com.jacoobia.immersivezoom.common.data.AttunedZoomBarTooltip;
 import com.jacoobia.immersivezoom.common.utils.DataUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
