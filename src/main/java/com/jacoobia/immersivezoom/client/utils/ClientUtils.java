@@ -1,10 +1,15 @@
 package com.jacoobia.immersivezoom.client.utils;
 
+import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
+import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
+import com.jacoobia.immersivezoom.common.utils.SpyglassType;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
+
+import static com.jacoobia.immersivezoom.client.registry.KeyMapRegistry.ZOOM_KEYMAPPING;
 
 public class ClientUtils {
 
@@ -42,5 +47,12 @@ public class ClientUtils {
         Minecraft minecraft = Minecraft.getInstance();
         return minecraft.options.getCameraType() != CameraType.FIRST_PERSON;
     }
+
+    public static boolean isHotkeyScoping(Player player) {
+        SpyglassSlotData data = player.getData(AttachmentRegistry.HIP_SPYGLASS);
+        if (data.spyglassType() == SpyglassType.NONE) return false;
+        return player.isLocalPlayer() ? ZOOM_KEYMAPPING.isDown() : data.scoping();
+    }
+
 
 }

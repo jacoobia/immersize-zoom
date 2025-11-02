@@ -17,7 +17,8 @@ public class ServerUtils {
      */
     public static void setHipItem(ServerPlayer player, ItemStack stack) {
         SpyglassType type = SpyglassType.fromItemStack(stack);
-        player.setData(AttachmentRegistry.HIP_SPYGLASS, new SpyglassSlotData(type, HipSide.RIGHT));
+        boolean scoping = player.getData(AttachmentRegistry.HIP_SPYGLASS).scoping();
+        player.setData(AttachmentRegistry.HIP_SPYGLASS, new SpyglassSlotData(type, HipSide.RIGHT, scoping));
     }
 
 }

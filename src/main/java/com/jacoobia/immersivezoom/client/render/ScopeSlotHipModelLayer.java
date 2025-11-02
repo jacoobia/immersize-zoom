@@ -1,7 +1,7 @@
 package com.jacoobia.immersivezoom.client.render;
 
-import com.jacoobia.immersivezoom.client.registry.KeyMapRegistry;
 import com.jacoobia.immersivezoom.client.temp.HipTuner;
+import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.jacoobia.immersivezoom.common.utils.HipSide;
@@ -10,15 +10,17 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY;
@@ -47,24 +49,21 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
         ItemStack stack = new ItemStack(item);
         if (stack.isEmpty()) return;
 
-        if (player.isLocalPlayer() && KeyMapRegistry.ZOOM_KEYMAPPING.isDown()) {
+        if (ClientUtils.isHotkeyScoping(player)) {
             pose.pushPose();
 
-            var arm = (data.side() == HipSide.LEFT) ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
+            ModelPart head = this.getParentModel().getHead();
+            float xRot = head.xRot;
+            head.xRot = Mth.clamp(head.xRot, (float) (-Math.PI / 6), (float) (Math.PI / 2));
+            head.translateAndRotate(pose);
+            head.xRot = xRot;
 
-            this.getParentModel().translateToHand(arm, pose);
-
-            pose.mulPose(Axis.XP.rotationDegrees(-90.0F));
-            pose.mulPose(Axis.YP.rotationDegrees(180.0F));
-
-            boolean left = (arm == HumanoidArm.LEFT);
-            pose.translate(left ? -1.0F / 16.0F : 1.0F / 16.0F, 0.125F, -0.625F);
-
-            var ctx = left ? ItemDisplayContext.THIRD_PERSON_LEFT_HAND
-                    : ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
+            CustomHeadLayer.translateToHead(pose, false);
+            boolean left = (data.side() == HipSide.LEFT);
+            pose.translate((left ? -2.5F : 2.5F) / 16.0F, -0.0625F, 0.0F);
 
             Minecraft.getInstance().getItemRenderer().renderStatic(
-                    stack, ctx, light, NO_OVERLAY, pose, buffers, player.level(), player.getId()
+                    stack, ItemDisplayContext.HEAD, light, NO_OVERLAY, pose, buffers, player.level(), player.getId()
             );
 
             pose.popPose();
