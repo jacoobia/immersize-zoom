@@ -30,7 +30,7 @@ public class SpyglassSlot extends Slot {
     }
 
     @Override
-    public boolean mayPlace(ItemStack stack) {
+    public boolean mayPlace(@NotNull ItemStack stack) {
         return SpyglassUtils.isSpyglass(stack);
     }
 
