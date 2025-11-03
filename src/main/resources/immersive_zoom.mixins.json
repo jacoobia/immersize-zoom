@@ -9,7 +9,6 @@
     "common.InventoryMixin"
   ],
   "client": [
-    "accessors.ItemInHandAccessor",
     "client.AbstractContainerScreenMixin",
     "client.GameRendererMixin",
     "client.PlayerItemInHandLayerMixin",

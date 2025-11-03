@@ -1,11 +1,23 @@
 package com.jacoobia.immersivezoom.common.utils;
 
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
+
+@EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class ParticleUtil {
+
+    private static final List<Effect> ACTIVE = new ArrayList<>();
 
     /**
      * Plays a mystical particle effect around a world position for ~1 second (20 ticks),
@@ -27,22 +39,31 @@ public class ParticleUtil {
      */
     public static void playMysticalEffect(ServerLevel level, Vec3 centre, int durationTicks, SimpleParticleType type, Runnable onComplete) {
         if (level == null || level.isClientSide()) return;
-        if (durationTicks <= 0) {
-            if (onComplete != null) level.getServer().execute(onComplete);
-            return;
+        ACTIVE.add(new Effect(level, centre, type, onComplete, durationTicks));
+    }
+
+    @SubscribeEvent
+    public static void onServerTick(ServerTickEvent.Post event) {
+        List<Runnable> finished = new ArrayList<>();
+
+        Iterator<Effect> iterator = ACTIVE.iterator();
+        while (iterator.hasNext()) {
+            Effect effect = iterator.next();
+            if (effect.ticksLeft-- > 0) {
+                spawnMysticalParticles(effect.level, effect.centre, effect.type);
+            } else {
+                iterator.remove();
+                if (effect.onComplete != null) finished.add(effect.onComplete);
+            }
         }
 
-        final int startTick = level.getServer().getTickCount();
+        // Run after the loop so a callback can start a new effect safely
+        finished.forEach(Runnable::run);
+    }
 
-        for (int i = 0; i < durationTicks; i++) {
-            final int runAt = startTick + i;
-            level.getServer().tell(new TickTask(runAt, () -> spawnMysticalParticles(level, centre, type)));
-        }
-
-        if (onComplete != null) {
-            final int runAt = startTick + durationTicks;
-            level.getServer().tell(new TickTask(runAt, onComplete));
-        }
+    @SubscribeEvent
+    public static void onServerStopped(ServerStoppedEvent event) {
+        ACTIVE.clear();
     }
 
     private static void spawnMysticalParticles(ServerLevel level, Vec3 center, SimpleParticleType type) {
@@ -65,6 +86,22 @@ public class ParticleUtil {
                     0.0, 0.0, 0.0,
                     speed
             );
+        }
+    }
+
+    private static final class Effect {
+        final ServerLevel level;
+        final Vec3 centre;
+        final SimpleParticleType type;
+        final Runnable onComplete;
+        int ticksLeft;
+
+        Effect(ServerLevel level, Vec3 centre, SimpleParticleType type, Runnable onComplete, int ticksLeft) {
+            this.level = level;
+            this.centre = centre;
+            this.type = type;
+            this.onComplete = onComplete;
+            this.ticksLeft = ticksLeft;
         }
     }
 
