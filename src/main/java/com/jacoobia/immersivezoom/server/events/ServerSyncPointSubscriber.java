@@ -43,13 +43,6 @@ public class ServerSyncPointSubscriber {
     }
 
     @SubscribeEvent
-    public static void onJoinWorld(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
-            SpyglassSlot.syncSlotContent(player);
-        }
-    }
-
-    @SubscribeEvent
     public static void onStartTracking(PlayerEvent.StartTracking event) {
         if (!(event.getTarget() instanceof ServerPlayer tracked)) return;
         if (!(event.getEntity() instanceof ServerPlayer viewer)) return;
