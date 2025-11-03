@@ -38,12 +38,6 @@ public class AddItemModifier extends LootModifier {
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> loot,
                                                           @NotNull LootContext lootContext) {
-        for (LootItemCondition condition : this.conditions) {
-            if (!condition.test(lootContext)) {
-                return loot;
-            }
-        }
-
         if (replace) {
             loot.clear();
         }
