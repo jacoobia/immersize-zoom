@@ -15,42 +15,48 @@ import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_INDEX;
  */
 public final class LocalZoomState {
 
-    private static ItemStack activeSpyglass = ItemStack.EMPTY;
+    private static boolean zooming = false;
     private static InteractionHand hand = null;
     private static boolean hotkeyScoping = false;
 
     private LocalZoomState() {}
 
     public static void update(LocalPlayer player) {
-        ItemStack slotStack = player.getInventory().getItem(SPYGLASS_SLOT_INDEX);
-        hotkeyScoping = ZOOM_KEYMAPPING.isDown() && SpyglassUtils.isSpyglass(slotStack);
+        hotkeyScoping = ZOOM_KEYMAPPING.isDown()
+                && SpyglassUtils.isSpyglass(player.getInventory().getItem(SPYGLASS_SLOT_INDEX));
 
         // A spyglass in use in hand takes priority over the hotkey
         if (player.isUsingItem() && SpyglassUtils.isSpyglass(player.getUseItem())) {
-            activeSpyglass = player.getUseItem();
+            zooming = true;
             hand = player.getUsedItemHand();
         } else {
-            activeSpyglass = hotkeyScoping ? slotStack : ItemStack.EMPTY;
+            zooming = hotkeyScoping;
             hand = null;
         }
     }
 
     public static void reset() {
-        activeSpyglass = ItemStack.EMPTY;
+        zooming = false;
         hand = null;
         hotkeyScoping = false;
     }
 
     /**
+     * Looks the stack up each call rather than caching it: a server inventory sync replaces the
+     * stack object, and a cached one would go stale until the next tick.
      * @return the spyglass being looked through: the one in use in hand, else the slot one while
      * the hotkey is held, else EMPTY
      */
     public static ItemStack activeSpyglass() {
-        return activeSpyglass;
+        LocalPlayer player = ClientUtils.getLocalPlayerCast();
+        if (!zooming || player == null) return ItemStack.EMPTY;
+        return hand == null
+                ? player.getInventory().getItem(SPYGLASS_SLOT_INDEX)
+                : player.getItemInHand(hand);
     }
 
     public static boolean isZooming() {
-        return !activeSpyglass.isEmpty();
+        return zooming;
     }
 
     /**

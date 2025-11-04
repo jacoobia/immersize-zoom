@@ -5,7 +5,7 @@ import com.jacoobia.immersivezoom.common.network.PacketHandler;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassZoomPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -30,17 +30,24 @@ public class ServerSpyglassZoomPacketHandler implements PacketHandler<SpyglassZo
             if (!Float.isFinite(requestedZoom)) return;
             requestedZoom = Mth.clamp(requestedZoom, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
 
-            ItemStack targetStack = switch (packet.source()) {
-                case SLOT -> player.getInventory().getItem(SPYGLASS_SLOT_INDEX);
-                case MAIN_HAND -> player.getItemInHand(InteractionHand.MAIN_HAND);
-                case OFF_HAND -> player.getItemInHand(InteractionHand.OFF_HAND);
+            Inventory inventory = player.getInventory();
+            int inventoryIndex = switch (packet.source()) {
+                case SLOT -> SPYGLASS_SLOT_INDEX;
+                case MAIN_HAND -> inventory.selected;
+                case OFF_HAND -> Inventory.SLOT_OFFHAND;
             };
 
-            if (!targetStack.isEmpty() && targetStack.getItem() instanceof AttunedSpyglass) {
-                targetStack.set(ZOOM_FACTOR, requestedZoom);
-                player.getInventory().setChanged();
-                player.inventoryMenu.broadcastChanges();
-            }
+            ItemStack targetStack = inventory.getItem(inventoryIndex);
+            if (!(targetStack.getItem() instanceof AttunedSpyglass)) return;
+
+            targetStack.set(ZOOM_FACTOR, requestedZoom);
+            inventory.setChanged();
+
+            // The client already has this value (it changed it first), so mark it as known.
+            // Otherwise the regular inventory sync sends it back, overwriting zoom the player has
+            // scrolled since, which makes the zoom jump back.
+            player.inventoryMenu.findSlot(inventory, inventoryIndex)
+                    .ifPresent(slot -> player.inventoryMenu.setRemoteSlot(slot, targetStack));
         });
     }
 
