@@ -27,7 +27,6 @@ import static com.jacoobia.immersivezoom.common.utils.NumberUtils.INT_ZERO;
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientInputSubscriber {
 
-    // Scroll wheels and trackpads can fire many notches a second; send the latest value at most this often
     private static final int ZOOM_SYNC_INTERVAL_TICKS = 5;
 
     private static SpyglassZoomPacket pendingZoom = null;
@@ -50,14 +49,14 @@ public class ClientInputSubscriber {
         float current = DataUtils.getFloatOrDefault(activeSpyglassStack, ZOOM_FACTOR, ATTUNED_ZOOM_DEFAULT);
         float next = Mth.clamp(deltaY > 0 ? current * step : current / step, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
 
-        // Update the client copy straight away; the server copy catches up in tickZoomSync
         activeSpyglassStack.set(ZOOM_FACTOR, next);
-        pendingZoom = SpyglassZoomPacket.create(LocalZoomState.hand(), next);
+        pendingZoom = SpyglassZoomPacket.create(LocalZoomState.getHand(), next);
     }
 
     /**
-     * Sends the latest scroll zoom to the server, at most once every ZOOM_SYNC_INTERVAL_TICKS.
-     * Called every client tick.
+     * Sends the latest scroll zoom to the server
+     * at most once every ZOOM_SYNC_INTERVAL_TICKS
+     * Called every client tick
      */
     public static void tickZoomSync() {
         if (ticksSinceZoomSync < ZOOM_SYNC_INTERVAL_TICKS) ticksSinceZoomSync++;

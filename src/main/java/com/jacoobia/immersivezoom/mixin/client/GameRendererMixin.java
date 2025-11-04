@@ -52,7 +52,7 @@ public class GameRendererMixin {
         }
 
         // A vanilla spyglass in hand is already handled by vanilla; only the hotkey needs the zoom
-        if (LocalZoomState.hand() == null) {
+        if (LocalZoomState.getHand() == null) {
             this.oldFov = this.fov;
             this.fov += ((1.0f / VANILLA_ZOOM) - this.fov) * ZOOMED_TRANSITION_MODIFIER;
             callbackInfo.cancel();

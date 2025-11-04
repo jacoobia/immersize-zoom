@@ -1,10 +1,8 @@
 package com.jacoobia.immersivezoom.common.utils;
 
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.phys.Vec3;
 
 /**
  * Utility class for handling operations related to spyglasses, including
@@ -20,18 +18,6 @@ public class SpyglassUtils {
      */
     public static boolean isSpyglass(ItemStack stack) {
         return stack.is(Items.SPYGLASS) || stack.is(ItemRegistry.ATTUNED_SPYGLASS);
-    }
-
-    /**
-     * Returns an approximate world position of the player's main hand
-     * @param player The player entity
-     * @return A Vec3 in world space
-     */
-    public static Vec3 getEstimatedHandPosition(Player player) {
-        Vec3 eyePos = player.getEyePosition();
-        Vec3 look = player.getLookAngle();
-        Vec3 side = look.cross(new Vec3(0, 1, 0)).normalize().scale(0.35);
-        return eyePos.add(look.scale(0.6)).add(side).add(0, -0.4, 0);
     }
 
 }

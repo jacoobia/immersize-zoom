@@ -1,6 +1,6 @@
 package com.jacoobia.immersivezoom.server.events;
 
-import com.jacoobia.immersivezoom.common.utils.ParticleUtil;
+import com.jacoobia.immersivezoom.server.utils.ritual.AttunementRitual;
 import com.jacoobia.immersivezoom.server.utils.MidnightCheck;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -17,7 +17,7 @@ public class ServerLifecycleSubscriber {
      */
     @SubscribeEvent
     public static void onServerStopped(ServerStoppedEvent event) {
-        ParticleUtil.clearEffects();
+        AttunementRitual.reset();
         MidnightCheck.reset();
     }
 

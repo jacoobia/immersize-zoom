@@ -19,7 +19,6 @@ public class ClientHudSubscriber {
      */
     @SubscribeEvent
     public static void onOverlayPre(RenderGuiLayerEvent.Pre event) {
-        // Runs for every GUI layer every frame, so it only reads the cached per-tick state
         if (!LocalZoomState.isZooming() || ClientUtils.isThirdPerson()) return;
 
         if (!event.getName().equals(VanillaGuiLayers.CAMERA_OVERLAYS))

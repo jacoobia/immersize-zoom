@@ -1,6 +1,6 @@
 package com.jacoobia.immersivezoom.server.events;
 
-import com.jacoobia.immersivezoom.common.utils.ParticleUtil;
+import com.jacoobia.immersivezoom.server.utils.ritual.AttunementRitual;
 import com.jacoobia.immersivezoom.server.utils.MidnightCheck;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -13,7 +13,7 @@ public class ServerTickSubscriber {
 
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
-        ParticleUtil.tickEffects();
+        AttunementRitual.tick();
         MidnightCheck.tickArrivals(event.getServer());
     }
 

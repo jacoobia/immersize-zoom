@@ -1,105 +1,50 @@
 package com.jacoobia.immersivezoom.common.utils;
 
-import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class ParticleUtil {
 
-    private static final List<Effect> ACTIVE = new ArrayList<>();
+    private static final double MOTE_SPEED = 0.09;
+    private static final int RITUAL_CHIME_DELAY = 15;
 
     /**
-     * Plays a mystical particle effect around a world position for ~1 second (20 ticks)
-     * then runs the provided callback on the server thread
-     * @param level Server level (must be server-side)
-     * @param centre World-space centre of the effect
-     * @param onComplete Callback to run after the effect finishes (nullable)
+     * Streams moonlight motes down from above into a point. With count 0, sendParticles
+     * spawns exactly at the position and treats the spread arguments as velocity
+     * @param level the server level
+     * @param centre the point the motes converge on
+     * @param age ticks into the ritual, used to pace the chimes
      */
-    public static void playMysticalEffect(ServerLevel level, Vec3 centre, SimpleParticleType type, Runnable onComplete) {
-        playMysticalEffect(level, centre, 20, type, onComplete); // 20 ticks ≈ 1s
-    }
-
-    /**
-     * Generalized version with configurable duration in ticks
-     * @param level Server level (must be server-side)
-     * @param centre World-space centre of the effect
-     * @param durationTicks How many ticks to run the effect
-     * @param onComplete Callback to run after the effect finishes (nullable)
-     */
-    public static void playMysticalEffect(ServerLevel level, Vec3 centre, int durationTicks, SimpleParticleType type, Runnable onComplete) {
-        if (level == null || level.isClientSide()) return;
-        ACTIVE.add(new Effect(level, centre, type, onComplete, durationTicks));
-    }
-
-    /**
-     * Spawns this tick's particles for every running effect and completes finished ones.
-     * Called every server tick.
-     */
-    public static void tickEffects() {
-        List<Runnable> finished = new ArrayList<>();
-
-        Iterator<Effect> iterator = ACTIVE.iterator();
-        while (iterator.hasNext()) {
-            Effect effect = iterator.next();
-            if (effect.ticksLeft-- > 0) {
-                spawnMysticalParticles(effect.level, effect.centre, effect.type);
-            } else {
-                iterator.remove();
-                if (effect.onComplete != null) finished.add(effect.onComplete);
-            }
+    public static void moonlight(ServerLevel level, Vec3 centre, int age) {
+        RandomSource random = level.random;
+        for (int i = 0; i < 3; i++) {
+            double angle = random.nextDouble() * Math.PI * 2;
+            double radius = 0.6 + random.nextDouble() * 0.8;
+            double height = 2.5 + random.nextDouble() * 1.5;
+            Vec3 start = centre.add(Math.cos(angle) * radius, height, Math.sin(angle) * radius);
+            Vec3 velocity = centre.subtract(start).scale(MOTE_SPEED);
+            level.sendParticles(ParticleTypes.END_ROD, start.x, start.y, start.z, 0, velocity.x, velocity.y, velocity.z, 1.0);
         }
-
-        finished.forEach(Runnable::run);
-    }
-
-    /**
-     * Drops all running effects, so none carry over between singleplayer worlds
-     */
-    public static void clearEffects() {
-        ACTIVE.clear();
-    }
-
-    private static void spawnMysticalParticles(ServerLevel level, Vec3 center, SimpleParticleType type) {
-        final int particlesPerTick = 10;
-        final double radius = 0.5;
-        final double height = 0.5;
-        final double speed = 0.0;
-
-        for (int n = 0; n < particlesPerTick; n++) {
-            double dx = (level.random.nextDouble() - 0.5) * 2.0 * radius;
-            double dy = level.random.nextDouble() * height;
-            double dz = (level.random.nextDouble() - 0.5) * 2.0 * radius;
-
-            level.sendParticles(
-                    type,
-                    center.x + dx,
-                    center.y + dy,
-                    center.z + dz,
-                    1,
-                    0.0, 0.0, 0.0,
-                    speed
-            );
+        if (age % RITUAL_CHIME_DELAY == 0) {
+            level.sendParticles(ParticleTypes.GLOW, centre.x, centre.y, centre.z, 2, 0.05, 0.05, 0.05, 0);
+            level.playSound(null, BlockPos.containing(centre), SoundEvents.AMETHYST_BLOCK_CHIME,
+                    SoundSource.PLAYERS, 0.6F, 1.2F + age / 100F);
         }
     }
 
-    private static final class Effect {
-        final ServerLevel level;
-        final Vec3 centre;
-        final SimpleParticleType type;
-        final Runnable onComplete;
-        int ticksLeft;
-
-        Effect(ServerLevel level, Vec3 centre, SimpleParticleType type, Runnable onComplete, int ticksLeft) {
-            this.level = level;
-            this.centre = centre;
-            this.type = type;
-            this.onComplete = onComplete;
-            this.ticksLeft = ticksLeft;
-        }
+    /**
+     * A burst of smoke and end rods around a point, one packet per type
+     * @param level the server level
+     * @param centre the centre of the burst
+     */
+    public static void smoke(ServerLevel level, Vec3 centre) {
+        level.sendParticles(ParticleTypes.END_ROD, centre.x, centre.y, centre.z, 6, 0.25, 0.25, 0.25, 0.02);
+        level.sendParticles(ParticleTypes.SMOKE, centre.x, centre.y, centre.z, 8, 0.2, 0.2, 0.2, 0.01);
     }
 
 }
