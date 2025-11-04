@@ -1,11 +1,13 @@
 package com.jacoobia.immersivezoom.client.event;
 
+import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import com.jacoobia.immersivezoom.client.utils.LocalZoomState;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassZoomPacket;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.utils.DataUtils;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
@@ -22,12 +24,16 @@ import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 import static com.jacoobia.immersivezoom.common.Constants.QUICK_ZOOM_STEP;
 import static com.jacoobia.immersivezoom.common.Constants.ZOOM_STEP;
 import static com.jacoobia.immersivezoom.common.registry.DataComponentRegistry.ZOOM_FACTOR;
+import static com.jacoobia.immersivezoom.common.utils.NumberUtils.FLOAT_ONE;
 import static com.jacoobia.immersivezoom.common.utils.NumberUtils.INT_ZERO;
 
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientInputSubscriber {
 
     private static final int ZOOM_SYNC_INTERVAL_TICKS = 5;
+    private static final long ZOOM_SOUND_COOLDOWN_MS = 150;
+
+    private static long lastZoomSoundMs = 0;
 
     private static SpyglassZoomPacket pendingZoom = null;
     private static int ticksSinceZoomSync = ZOOM_SYNC_INTERVAL_TICKS;
@@ -48,7 +54,13 @@ public class ClientInputSubscriber {
         float step = player.isShiftKeyDown() ? QUICK_ZOOM_STEP : ZOOM_STEP;
         float current = DataUtils.getFloatOrDefault(activeSpyglassStack, ZOOM_FACTOR, ATTUNED_ZOOM_DEFAULT);
         float next = Mth.clamp(deltaY > 0 ? current * step : current / step, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
+        if (next == current) return;
 
+        long now = System.currentTimeMillis();
+        if (ClientConfig.ZOOM_SOUND.get() && now - lastZoomSoundMs >= ZOOM_SOUND_COOLDOWN_MS) {
+            player.playSound(next > current ? SoundEvents.SPYGLASS_USE : SoundEvents.SPYGLASS_STOP_USING, FLOAT_ONE, FLOAT_ONE);
+            lastZoomSoundMs = now;
+        }
         activeSpyglassStack.set(ZOOM_FACTOR, next);
         pendingZoom = SpyglassZoomPacket.create(LocalZoomState.getHand(), next);
     }

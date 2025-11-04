@@ -92,13 +92,14 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
             case SIDE_LEFT, SIDE_RIGHT -> SIDE_HIP_OFFSET_X;
             case BACK_LEFT, BACK_RIGHT -> BACK_HIP_OFFSET_X;
         };
+
         double z = switch (data.placement()) {
             case FRONT_LEFT, FRONT_RIGHT -> FRONT_HIP_OFFSET_Z;
             case SIDE_LEFT, SIDE_RIGHT -> SIDE_HIP_OFFSET_Z;
             case BACK_LEFT, BACK_RIGHT -> BACK_HIP_OFFSET_Z;
         };
-        pose.translate(left ? offsetX : -offsetX, HIP_OFFSET_Y, z);
 
+        pose.translate(left ? offsetX : -offsetX, HIP_OFFSET_Y, z);
         pose.mulPose(Axis.YP.rotationDegrees(left ? -90f : 90f));
         pose.scale(0.8f, 0.4f, 0.8f);
 

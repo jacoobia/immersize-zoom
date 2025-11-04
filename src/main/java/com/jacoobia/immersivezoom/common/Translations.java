@@ -25,6 +25,8 @@ public class Translations {
         public static final String SHOW_BELT_SPYGLASS_TOOLTIP = "immersive_zoom.configuration.showBeltSpyglass.tooltip";
         public static final String RENDER_BELT_SPYGLASSES = "immersive_zoom.configuration.renderBeltSpyglasses";
         public static final String RENDER_BELT_SPYGLASSES_TOOLTIP = "immersive_zoom.configuration.renderBeltSpyglasses.tooltip";
+        public static final String ZOOM_SOUND = "immersive_zoom.configuration.zoomSound";
+        public static final String ZOOM_SOUND_TOOLTIP = "immersive_zoom.configuration.zoomSound.tooltip";
 
         public static Component beltPlacement(BeltPlacement placement) {
             return Component.translatable(BELT_PLACEMENT + "." + placement.name().toLowerCase(Locale.ROOT));
