@@ -13,6 +13,16 @@ public class ClientConfig {
             .translation(Translations.Config.BELT_PLACEMENT)
             .defineEnum("beltPlacement", BeltPlacement.BACK_RIGHT);
 
+    public static final ModConfigSpec.BooleanValue SHOW_BELT_SPYGLASS = BUILDER
+            .comment(Translations.Config.SHOW_BELT_SPYGLASS_TOOLTIP)
+            .translation(Translations.Config.SHOW_BELT_SPYGLASS)
+            .define("showBeltSpyglass", true);
+
+    public static final ModConfigSpec.BooleanValue RENDER_BELT_SPYGLASSES = BUILDER
+            .comment(Translations.Config.RENDER_BELT_SPYGLASSES_TOOLTIP)
+            .translation(Translations.Config.RENDER_BELT_SPYGLASSES)
+            .define("renderBeltSpyglasses", true);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
 }

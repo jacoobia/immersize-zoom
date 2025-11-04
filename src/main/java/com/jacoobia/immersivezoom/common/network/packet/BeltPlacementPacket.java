@@ -13,8 +13,9 @@ import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 /**
  * Sent by the client to tell the server where it wants its hip spyglass
  * @param placement the client's configured belt placement
+ * @param visible whether the client wants its belt spyglass shown to everyone
  */
-public record BeltPlacementPacket(BeltPlacement placement) implements CustomPacketPayload {
+public record BeltPlacementPacket(BeltPlacement placement, boolean visible) implements CustomPacketPayload {
 
     public static final Type<BeltPlacementPacket> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(MOD_ID, "belt_placement"));
@@ -22,6 +23,7 @@ public record BeltPlacementPacket(BeltPlacement placement) implements CustomPack
     public static final StreamCodec<RegistryFriendlyByteBuf, BeltPlacementPacket> STREAM_CODEC =
             StreamCodec.composite(
                     ByteBufCodecs.VAR_INT.map(i -> BeltPlacement.values()[i], BeltPlacement::ordinal), BeltPlacementPacket::placement,
+                    ByteBufCodecs.BOOL, BeltPlacementPacket::visible,
                     BeltPlacementPacket::new
             );
 

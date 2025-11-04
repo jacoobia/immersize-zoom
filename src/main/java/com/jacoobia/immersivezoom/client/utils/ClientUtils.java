@@ -52,11 +52,11 @@ public class ClientUtils {
     }
 
     /**
-     * Tells the server the configured belt placement
+     * Tells the server the configured belt placement and whether to show it
      */
     public static void sendBeltPlacement() {
         if (Minecraft.getInstance().getConnection() == null) return;
-        PacketDistributor.sendToServer(new BeltPlacementPacket(ClientConfig.BELT_PLACEMENT.get()));
+        PacketDistributor.sendToServer(new BeltPlacementPacket(ClientConfig.BELT_PLACEMENT.get(), ClientConfig.SHOW_BELT_SPYGLASS.get()));
     }
 
 }

@@ -21,6 +21,10 @@ public class Translations {
     public static class Config {
         public static final String BELT_PLACEMENT = "immersive_zoom.configuration.beltPlacement";
         public static final String BELT_PLACEMENT_TOOLTIP = "immersive_zoom.configuration.beltPlacement.tooltip";
+        public static final String SHOW_BELT_SPYGLASS = "immersive_zoom.configuration.showBeltSpyglass";
+        public static final String SHOW_BELT_SPYGLASS_TOOLTIP = "immersive_zoom.configuration.showBeltSpyglass.tooltip";
+        public static final String RENDER_BELT_SPYGLASSES = "immersive_zoom.configuration.renderBeltSpyglasses";
+        public static final String RENDER_BELT_SPYGLASSES_TOOLTIP = "immersive_zoom.configuration.renderBeltSpyglasses.tooltip";
 
         public static Component beltPlacement(BeltPlacement placement) {
             return Component.translatable(BELT_PLACEMENT + "." + placement.name().toLowerCase(Locale.ROOT));

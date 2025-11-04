@@ -1,5 +1,6 @@
 package com.jacoobia.immersivezoom.client.render;
 
+import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
@@ -80,6 +81,8 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
             return;
         }
 
+        if (!data.visible() || !ClientConfig.RENDER_BELT_SPYGLASSES.get()) return;
+
         pose.pushPose();
         this.getParentModel().body.translateAndRotate(pose);
 
@@ -97,7 +100,6 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
         pose.translate(left ? offsetX : -offsetX, HIP_OFFSET_Y, z);
 
         pose.mulPose(Axis.YP.rotationDegrees(left ? -90f : 90f));
-        pose.mulPose(Axis.ZP.rotationDegrees(left ? 10f : -10f));
         pose.scale(0.8f, 0.4f, 0.8f);
 
         Minecraft.getInstance().getItemRenderer().renderStatic(
