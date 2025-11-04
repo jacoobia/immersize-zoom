@@ -3,47 +3,43 @@ package com.jacoobia.immersivezoom.common.utils;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.server.ServerStoppedEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
-
-@EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class ParticleUtil {
 
     private static final List<Effect> ACTIVE = new ArrayList<>();
 
     /**
-     * Plays a mystical particle effect around a world position for ~1 second (20 ticks),
-     * then runs the provided callback on the server thread.
-     * @param level Server level (must be server-side).
-     * @param centre World-space centre of the effect.
-     * @param onComplete Callback to run after the effect finishes (nullable).
+     * Plays a mystical particle effect around a world position for ~1 second (20 ticks)
+     * then runs the provided callback on the server thread
+     * @param level Server level (must be server-side)
+     * @param centre World-space centre of the effect
+     * @param onComplete Callback to run after the effect finishes (nullable)
      */
     public static void playMysticalEffect(ServerLevel level, Vec3 centre, SimpleParticleType type, Runnable onComplete) {
         playMysticalEffect(level, centre, 20, type, onComplete); // 20 ticks ≈ 1s
     }
 
     /**
-     * Generalized version with configurable duration in ticks.
-     * @param level Server level (must be server-side).
-     * @param centre World-space centre of the effect.
-     * @param durationTicks How many ticks to run the effect.
-     * @param onComplete Callback to run after the effect finishes (nullable).
+     * Generalized version with configurable duration in ticks
+     * @param level Server level (must be server-side)
+     * @param centre World-space centre of the effect
+     * @param durationTicks How many ticks to run the effect
+     * @param onComplete Callback to run after the effect finishes (nullable)
      */
     public static void playMysticalEffect(ServerLevel level, Vec3 centre, int durationTicks, SimpleParticleType type, Runnable onComplete) {
         if (level == null || level.isClientSide()) return;
         ACTIVE.add(new Effect(level, centre, type, onComplete, durationTicks));
     }
 
-    @SubscribeEvent
-    public static void onServerTick(ServerTickEvent.Post event) {
+    /**
+     * Spawns this tick's particles for every running effect and completes finished ones.
+     * Called every server tick.
+     */
+    public static void tickEffects() {
         List<Runnable> finished = new ArrayList<>();
 
         Iterator<Effect> iterator = ACTIVE.iterator();
@@ -57,12 +53,13 @@ public class ParticleUtil {
             }
         }
 
-        // Run after the loop so a callback can start a new effect safely
         finished.forEach(Runnable::run);
     }
 
-    @SubscribeEvent
-    public static void onServerStopped(ServerStoppedEvent event) {
+    /**
+     * Drops all running effects, so none carry over between singleplayer worlds
+     */
+    public static void clearEffects() {
         ACTIVE.clear();
     }
 

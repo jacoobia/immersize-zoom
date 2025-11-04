@@ -4,8 +4,10 @@ import com.jacoobia.immersivezoom.common.container.SpyglassSlot;
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassSlotSyncPacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
+import com.jacoobia.immersivezoom.server.utils.MidnightCheck;
 import com.jacoobia.immersivezoom.server.utils.ServerUtils;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -24,6 +26,7 @@ public class ServerSyncPointSubscriber {
         if (event.getEntity() instanceof ServerPlayer player) {
             ServerUtils.setHipItem(player, player.getInventory().getItem(SPYGLASS_SLOT_INDEX));
             SpyglassSlot.syncSlotContent(player);
+            MidnightCheck.scheduleArrival(player);
         }
     }
 
@@ -39,6 +42,7 @@ public class ServerSyncPointSubscriber {
     public static void onChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             SpyglassSlot.syncSlotContent(player);
+            if (event.getTo() == Level.OVERWORLD) MidnightCheck.scheduleArrival(player);
         }
     }
 

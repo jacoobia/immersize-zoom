@@ -9,10 +9,19 @@ public class TimeUtils {
     private static final long TOLERANCE = 500L;
 
     public static boolean isAroundMidnight(ServerLevel level) {
+        return isAroundMidnight(level, TOLERANCE);
+    }
+
+    /**
+     * @param level the level to check the time in
+     * @param tolerance tolerance either side of midnight, i.e +/- N ticks
+     * @return true if the level's time is within tolerance of midnight
+     */
+    public static boolean isAroundMidnight(ServerLevel level, long tolerance) {
         if (!level.dimensionType().hasSkyLight()) return false;
         long time = Math.floorMod(level.getDayTime(), TICKS_PER_DAY);
         long diff = Math.abs(time - MIDNIGHT);
         diff = Math.min(diff, TICKS_PER_DAY - diff);
-        return diff <= TOLERANCE;
+        return diff <= tolerance;
     }
 }
