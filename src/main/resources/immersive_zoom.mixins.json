@@ -6,10 +6,11 @@
   "mixins": [
     "accessors.InventoryMenuAccessor",
     "common.InventoryMenuMixin",
-    "common.InventoryMixin"
+    "common.InventoryMixin",
+    "common.ServerGamePacketListenerImplMixin"
   ],
   "client": [
-    "client.AbstractContainerScreenMixin",
+    "client.CreativeModeInventoryScreenMixin",
     "client.GameRendererMixin",
     "client.PlayerItemInHandLayerMixin",
     "client.PlayerMixin"

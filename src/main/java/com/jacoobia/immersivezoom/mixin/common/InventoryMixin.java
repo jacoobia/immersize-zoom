@@ -1,6 +1,5 @@
 package com.jacoobia.immersivezoom.mixin.common;
 
-import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -60,89 +59,6 @@ public class InventoryMixin {
         callback.setReturnValue(callback.getReturnValue() + INTEGER_ONE);
     }
 
-    /**
-     * Gets the contents of the spyglass slot
-     * @param index the slot index
-     * @param callback the mixin callback
-     */
-    @Inject(method = "getItem", at = @At("HEAD"), cancellable = true)
-    private void getItemExtraSlot(int index, CallbackInfoReturnable<ItemStack> callback) {
-        if (index == SPYGLASS_SLOT_INDEX) {
-            callback.setReturnValue(immersiveZoom$spyglassSlot.getFirst());
-        }
-    }
-
-    /**
-     * Allows the engine to know if the slot has had an item put into it
-     * and updates the contents and UI
-     * @param index the slot index
-     * @param stack the item stack
-     * @param callback the mixin callback
-     */
-    @Inject(method = "setItem", at = @At("HEAD"), cancellable = true)
-    private void setItemExtraSlot(int index, ItemStack stack, CallbackInfo callback) {
-        if (index == SPYGLASS_SLOT_INDEX && (stack.isEmpty() || SpyglassUtils.isSpyglass(stack))) {
-            immersiveZoom$spyglassSlot.set(INTEGER_ZERO, stack);
-            callback.cancel();
-        }
-    }
-
-    /**
-     * When an item is removed from the slot on the client side, update the slot
-     * I think this also runs whenever code tries to remove an item from the slot
-     * @param index the slot index
-     * @param callback the mixin callback
-     */
-    @Inject(method = "removeItemNoUpdate", at = @At("HEAD"), cancellable = true)
-    private void removeItemNoUpdateExtraSlot(int index, CallbackInfoReturnable<ItemStack> callback) {
-        if (index == SPYGLASS_SLOT_INDEX) {
-            callback.setReturnValue(immersiveZoom$spyglassSlot.set(INTEGER_ZERO, EMPTY));
-        }
-    }
-
-    /**
-     * When an item is removed from the slot on the server side, update the slot i.e:
-     * Shift right-clicked
-     * Left-clicked
-     * etc.
-     * @param index the slot index
-     * @param count the count of items
-     * @param callback the mixin callback
-     */
-    @Inject(method = "removeItem(II)Lnet/minecraft/world/item/ItemStack;", at = @At("HEAD"), cancellable = true)
-    private void removeItemExtraSlot(int index, int count, CallbackInfoReturnable<ItemStack> callback) {
-        if (index == SPYGLASS_SLOT_INDEX) {
-            ItemStack item = immersiveZoom$spyglassSlot.getFirst();
-            if (!item.isEmpty()) {
-                immersiveZoom$spyglassSlot.set(INTEGER_ZERO, ItemStack.EMPTY);
-                callback.setReturnValue(item);
-            } else {
-                callback.setReturnValue(ItemStack.EMPTY);
-            }
-        }
-    }
-
-    /**
-     * When an item is removed from the slot by the player, update the slot
-     * @param stack the item stack
-     * @param callback the mixin callback
-     */
-    @Inject(method = "removeItem(Lnet/minecraft/world/item/ItemStack;)V", at = @At("HEAD"))
-    private void removeItemByStack(ItemStack stack, CallbackInfo callback) {
-        if (!stack.isEmpty() && stack == immersiveZoom$spyglassSlot.getFirst()) {
-            immersiveZoom$spyglassSlot.set(INTEGER_ZERO, ItemStack.EMPTY);
-        }
-    }
-
-    /**
-     * Clear the spyglass slot when the inventory is cleared
-     * @param callback the mixin callback
-     */
-    @Inject(method = "clearContent", at = @At("TAIL"))
-    private void clearContentExtraSlot(CallbackInfo callback) {
-        immersiveZoom$spyglassSlot.set(INTEGER_ZERO, EMPTY);
-    }
-
     @Inject(method = "save", at = @At("RETURN"))
     private void saveExtraSlot(ListTag listTag, CallbackInfoReturnable<ListTag> callback) {
         ItemStack spyglassStack = immersiveZoom$spyglassSlot.getFirst();
@@ -164,6 +80,5 @@ public class InventoryMixin {
             }
         }
     }
-
 
 }

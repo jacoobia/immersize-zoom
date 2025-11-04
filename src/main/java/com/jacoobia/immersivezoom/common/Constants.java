@@ -23,8 +23,10 @@ public class Constants {
 
     public static final int DEFAULT_ZOOM_KEY = InputConstants.KEY_Z;
 
-    public static final ResourceLocation CUSTOM_INVENTORY_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/gui/container/iz_inventory.png");
+    public static final int SPYGLASS_SLOT_X = 77;
+    public static final int SPYGLASS_SLOT_Y = 44;
+    public static final int CREATIVE_SPYGLASS_SLOT_X = 127;
+    public static final int CREATIVE_SPYGLASS_SLOT_Y = 20;
 
     public static final ResourceLocation EMPTY_SLOT_SPYGLASS =
             ResourceLocation.fromNamespaceAndPath(MOD_ID,"item/empty_slot_spyglass");
