@@ -24,6 +24,7 @@ public final class LocalZoomState {
 
     public static void update(LocalPlayer player) {
         hotkeyScoping = ZOOM_KEYMAPPING.isDown()
+                && !player.isUsingItem()
                 && SpyglassUtils.isSpyglass(player.getInventory().getItem(SPYGLASS_SLOT_INDEX));
 
         if (player.isUsingItem() && SpyglassUtils.isSpyglass(player.getUseItem())) {
