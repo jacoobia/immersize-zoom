@@ -71,7 +71,7 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
             head.xRot = xRot;
 
             CustomHeadLayer.translateToHead(pose, false);
-            pose.translate((data.placement().isLeft() ? -2.5F : 2.5F) / 16.0F, -0.0625F, 0.0F);
+            pose.translate((data.placement().isLeft() ? 2.5F : -2.5F) / 16.0F, -0.0625F, 0.0F);
 
             Minecraft.getInstance().getItemRenderer().renderStatic(
                     stack, ItemDisplayContext.HEAD, light, NO_OVERLAY, pose, buffers, player.level(), player.getId()
