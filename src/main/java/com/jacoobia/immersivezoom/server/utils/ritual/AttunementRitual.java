@@ -33,6 +33,7 @@ public class AttunementRitual {
 
     private static final double FLOAT_DISTANCE = 1.2; // blocks in front of the player
     private static final double FLOAT_DROP = 0.3;     // below eye height
+    private static final double ITEM_CENTRE_HEIGHT = 0.5; // entity position to the visual centre of the bobbing item
     private static final int RELEASE_PICKUP_DELAY = 20;
     private static final String TAG = MOD_ID + ":ritual";
 
@@ -103,7 +104,7 @@ public class AttunementRitual {
             if (ticksLived == RISE_END) entity.hasImpulse = true;
         }
 
-        Vec3 centre = entity.position().add(0, 0.25, 0);
+        Vec3 centre = entity.position().add(0, ITEM_CENTRE_HEIGHT, 0);
 
         if (ticksLived > RISE_END && ticksLived <= ABSORB_END) ParticleUtil.moonlight(ritual.getLevel(), centre, ticksLived);
         if (ticksLived > ABSORB_END && ticksLived <= RELEASE_AT) ParticleUtil.smoke(ritual.getLevel(), centre);

@@ -15,6 +15,7 @@ public class ServerTickSubscriber {
     public static void onServerTick(ServerTickEvent.Post event) {
         AttunementRitual.tick();
         MidnightCheck.tickArrivals(event.getServer());
+        MidnightCheck.tickNudges(event.getServer());
     }
 
 }

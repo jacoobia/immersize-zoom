@@ -3,6 +3,7 @@ package com.jacoobia.immersivezoom.server.utils;
 import com.jacoobia.immersivezoom.common.Translations;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.jacoobia.immersivezoom.common.registry.SoundRegistry;
+import com.jacoobia.immersivezoom.common.utils.ParticleUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,9 +25,11 @@ public class MidnightCheck {
     private static final long HUM_TOLERANCE = 1000L;
     private static final int CHECK_INTERVAL_TICKS = 20;
     private static final int ARRIVAL_DELAY_TICKS = 60;
+    private static final int NUDGE_DURATION_TICKS = 40;
 
     private static Boolean wasMidnight = null;
     private static final Map<UUID, Integer> PENDING_ARRIVALS = new HashMap<>();
+    private static final Map<UUID, Integer> ACTIVE_NUDGES = new HashMap<>();
 
     /**
      * Queues a midnight check for a player arriving in the overworld that
@@ -84,14 +87,37 @@ public class MidnightCheck {
     }
 
     /**
+     * Called every server tick, plays the moonlight motes around each humming
+     * player for NUDGE_DURATION_TICKS, following them as they move
+     * @param server the server
+     */
+    public static void tickNudges(MinecraftServer server) {
+        if (ACTIVE_NUDGES.isEmpty()) return;
+
+        Iterator<Map.Entry<UUID, Integer>> iterator = ACTIVE_NUDGES.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<UUID, Integer> entry = iterator.next();
+            ServerPlayer player = server.getPlayerList().getPlayer(entry.getKey());
+            int ticksLeft = entry.getValue() - 1;
+            if (player == null || ticksLeft <= 0) {
+                iterator.remove();
+                continue;
+            }
+
+            entry.setValue(ticksLeft);
+            ParticleUtil.moonlightNudge(player.serverLevel(), player.position().add(0, 1.0, 0));
+        }
+    }
+
+    /**
      * Clears all state, so nothing carries over between singleplayer worlds
      */
     public static void reset() {
+        ACTIVE_NUDGES.clear();
         PENDING_ARRIVALS.clear();
         wasMidnight = null;
     }
 
-    // TODO: Add some kind of cool particle effect to this
     private static void playEffectIfCarryingShard(ServerPlayer player) {
         if (player.getInventory().contains(stack ->
                 stack.is(ItemRegistry.UNATTUNED_AMETHYST_SHARD))) {
@@ -100,6 +126,7 @@ public class MidnightCheck {
                     null, player.getX(), player.getY(), player.getZ(),
                     SoundRegistry.HUM.get(), SoundSource.PLAYERS, 1.0F, 1.0F
             );
+            ACTIVE_NUDGES.put(player.getUUID(), NUDGE_DURATION_TICKS);
         }
     }
 
