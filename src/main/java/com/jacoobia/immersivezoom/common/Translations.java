@@ -10,7 +10,6 @@ public class Translations {
         // Plain keys, not Components: KeyMapping translates these itself, and saves them in options.txt
         public static final String CATEGORY = "key.immersive_zoom.keybinds.category";
         public static final String ZOOM = "key.immersive_zoom.keybinds.keybind.zoom";
-        public static final String TOGGLE_TEMP_SCREEN = "key.immersive_zoom.keybinds.keybind.toggle_temp_screen";
     }
 
     public static class Tooltips {
