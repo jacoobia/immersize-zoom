@@ -1,0 +1,33 @@
+{
+  "parent": "immersive_zoom:immersive_zoom/root",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersive_zoom:unattuned_amethyst_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersive_zoom.unattuned_amethyst.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersive_zoom:unattuned_amethyst_shard"
+    },
+    "title": {
+      "translate": "advancements.immersive_zoom.unattuned_amethyst.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

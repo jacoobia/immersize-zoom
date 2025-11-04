@@ -1,0 +1,12 @@
+#!/bin/sh
+# Datagen
+git diff --cached --name-only | grep -q '^src/main/java/' || exit 0
+
+echo "pre-commit: running datagen..."
+./gradlew runData --quiet > /dev/null 2>&1 || { echo "pre-commit: runData failed, run ./gradlew runData to see why"; exit 1; }
+
+if [ -n "$(git status --porcelain -- src/generated)" ]; then
+    echo "pre-commit: datagen output changed. Review and stage src/generated, then commit again:"
+    git status --short -- src/generated
+    exit 1
+fi

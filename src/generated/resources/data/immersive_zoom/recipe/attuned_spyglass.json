@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "immersive_zoom:attuned_amethyst_shard"
+    },
+    "F": {
+      "item": "immersive_zoom:copper_focus"
+    },
+    "S": {
+      "item": "minecraft:spyglass"
+    }
+  },
+  "pattern": [
+    " A ",
+    " F ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersive_zoom:attuned_spyglass"
+  }
+}

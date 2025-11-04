@@ -1,0 +1,17 @@
+{
+  "type": "immersive_zoom:add_item",
+  "conditions": [
+    {
+      "block": "minecraft:amethyst_cluster",
+      "condition": "minecraft:block_state_property"
+    },
+    {
+      "chance": 0.33,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "items": [
+    "immersive_zoom:unattuned_amethyst_shard"
+  ],
+  "replace": true
+}

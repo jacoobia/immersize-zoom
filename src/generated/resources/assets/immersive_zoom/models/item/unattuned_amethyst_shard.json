@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "immersive_zoom:item/unattuned_amethyst_shard"
+  }
+}

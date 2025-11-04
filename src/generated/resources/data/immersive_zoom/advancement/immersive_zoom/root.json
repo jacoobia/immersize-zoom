@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:spyglass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "description": {
+      "translate": "advancements.immersive_zoom.root.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:spyglass"
+    },
+    "title": {
+      "translate": "advancements.immersive_zoom.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

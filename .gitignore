@@ -116,6 +116,7 @@ run/
 
 # Architectury Garbage
 *.architectury-
-/src/generated/
-/src/generated/**/*.json
 /run-client2/**
+
+# Datagen's hash cache, rewritten with timestamps on every change
+/src/generated/resources/.cache/

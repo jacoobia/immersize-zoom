@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_attuned_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersive_zoom:attuned_amethyst_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_copper_focus": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersive_zoom:copper_focus"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_spyglass": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:spyglass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersive_zoom:attuned_spyglass"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_spyglass",
+      "has_copper_focus",
+      "has_attuned_shard"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersive_zoom:attuned_spyglass"
+    ]
+  }
+}

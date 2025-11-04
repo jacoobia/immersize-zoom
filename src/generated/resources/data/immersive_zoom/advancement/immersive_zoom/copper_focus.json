@@ -1,0 +1,33 @@
+{
+  "parent": "immersive_zoom:immersive_zoom/root",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersive_zoom:copper_focus"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersive_zoom.copper_focus.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersive_zoom:copper_focus"
+    },
+    "title": {
+      "translate": "advancements.immersive_zoom.copper_focus.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
