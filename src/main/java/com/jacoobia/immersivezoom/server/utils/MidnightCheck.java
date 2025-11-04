@@ -2,9 +2,11 @@ package com.jacoobia.immersivezoom.server.utils;
 
 import com.jacoobia.immersivezoom.common.Translations;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
+import com.jacoobia.immersivezoom.common.registry.SoundRegistry;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 
 import java.util.HashMap;
@@ -94,6 +96,10 @@ public class MidnightCheck {
         if (player.getInventory().contains(stack ->
                 stack.is(ItemRegistry.UNATTUNED_AMETHYST_SHARD))) {
             player.displayClientMessage(Translations.Lore.midnight, true);
+            player.level().playSound(
+                    null, player.getX(), player.getY(), player.getZ(),
+                    SoundRegistry.HUM.get(), SoundSource.PLAYERS, 1.0F, 1.0F
+            );
         }
     }
 
