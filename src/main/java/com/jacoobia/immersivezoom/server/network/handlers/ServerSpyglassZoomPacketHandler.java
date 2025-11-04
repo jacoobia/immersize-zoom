@@ -5,6 +5,7 @@ import com.jacoobia.immersivezoom.common.network.PacketHandler;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassZoomPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -29,9 +30,11 @@ public class ServerSpyglassZoomPacketHandler implements PacketHandler<SpyglassZo
             if (!Float.isFinite(requestedZoom)) return;
             requestedZoom = Mth.clamp(requestedZoom, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
 
-            ItemStack targetStack = packet.fromSlot()
-                    ? player.getInventory().getItem(SPYGLASS_SLOT_INDEX)
-                    : player.getUseItem();
+            ItemStack targetStack = switch (packet.source()) {
+                case SLOT -> player.getInventory().getItem(SPYGLASS_SLOT_INDEX);
+                case MAIN_HAND -> player.getItemInHand(InteractionHand.MAIN_HAND);
+                case OFF_HAND -> player.getItemInHand(InteractionHand.OFF_HAND);
+            };
 
             if (!targetStack.isEmpty() && targetStack.getItem() instanceof AttunedSpyglass) {
                 targetStack.set(ZOOM_FACTOR, requestedZoom);

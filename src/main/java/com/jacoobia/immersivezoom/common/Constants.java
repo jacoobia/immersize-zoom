@@ -14,8 +14,9 @@ public class Constants {
 
     public static final float VANILLA_ZOOM = 10.0f;
 
-    public static final float ZOOM_STEP = 0.25f;
-    public static final float QUICK_ZOOM_STEP = 0.5f;
+    // Zoom is multiplied/divided by these per scroll notch, so each notch feels the same at any zoom level
+    public static final float ZOOM_STEP = 1.05f;
+    public static final float QUICK_ZOOM_STEP = 1.25f;
 
     public static final float ZOOMED_TRANSITION_MODIFIER = 0.5f;
 

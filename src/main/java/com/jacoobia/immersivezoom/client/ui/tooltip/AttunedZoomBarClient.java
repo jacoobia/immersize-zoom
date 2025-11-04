@@ -1,9 +1,11 @@
 package com.jacoobia.immersivezoom.client.ui.tooltip;
 
+import com.jacoobia.immersivezoom.common.Translations;
 import com.jacoobia.immersivezoom.common.data.AttunedZoomBarTooltip;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +14,8 @@ public record AttunedZoomBarClient(AttunedZoomBarTooltip data) implements Client
     private static final int WIDTH = 90;
     private static final int HEIGHT = 8;
     private static final int PAD = 1;
+    private static final int LABEL_GAP = 4;
+    private static final int LINE_HEIGHT = 10;
 
     private static final int COLOR_BORDER = 0xFF000000;
     private static final int COLOR_BG = 0xFF2E2E2E;
@@ -19,12 +23,16 @@ public record AttunedZoomBarClient(AttunedZoomBarTooltip data) implements Client
 
     @Override
     public int getHeight() {
-        return HEIGHT;
+        return LINE_HEIGHT;
     }
 
     @Override
     public int getWidth(@NotNull Font font) {
-        return WIDTH;
+        return WIDTH + LABEL_GAP + font.width(label());
+    }
+
+    private Component label() {
+        return Translations.Tooltips.zoomLevel(data.zoom());
     }
 
     @Override
@@ -44,5 +52,7 @@ public record AttunedZoomBarClient(AttunedZoomBarTooltip data) implements Client
         if (fillW > 0) {
             g.fill(x + PAD + 1, y + PAD + 1, x + PAD + 1 + fillW, y + h - PAD - 1, COLOR_FILL);
         }
+
+        g.drawString(font, label(), x + w + LABEL_GAP, y, 0xFFFFFFFF);
     }
 }

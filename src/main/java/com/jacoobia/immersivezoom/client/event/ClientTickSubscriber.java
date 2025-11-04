@@ -28,6 +28,7 @@ public class ClientTickSubscriber {
         }
 
         LocalZoomState.update(player);
+        ClientInputSubscriber.tickZoomSync();
 
         boolean scoping = LocalZoomState.isHotkeyScoping();
         if (scoping != wasScoping) {
@@ -44,5 +45,6 @@ public class ClientTickSubscriber {
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         wasScoping = false;
         LocalZoomState.reset();
+        ClientInputSubscriber.resetZoomSync();
     }
 }

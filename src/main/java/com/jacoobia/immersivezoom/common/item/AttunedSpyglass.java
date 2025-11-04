@@ -49,7 +49,8 @@ public class AttunedSpyglass extends SpyglassItem {
     @Override
     public @NotNull Optional<TooltipComponent> getTooltipImage(@NotNull ItemStack stack) {
         float zoom = DataUtils.getFloatOrDefault(stack, ZOOM_FACTOR, ATTUNED_ZOOM_DEFAULT);
-        float progress = (zoom - ATTUNED_ZOOM_MIN) / (ATTUNED_ZOOM_MAX - ATTUNED_ZOOM_MIN);
+        // Log scale to match the multiplicative scroll steps: every notch moves the bar the same amount
+        float progress = (float) (Math.log(zoom / ATTUNED_ZOOM_MIN) / Math.log(ATTUNED_ZOOM_MAX / ATTUNED_ZOOM_MIN));
         progress = Mth.clamp(progress, 0f, 1f);
         return Optional.of(new AttunedZoomBarTooltip(progress, zoom));
     }

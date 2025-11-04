@@ -18,7 +18,7 @@ public class PacketEventBusSubscriber {
 
     @SubscribeEvent
     public static void register(final RegisterPayloadHandlersEvent event) {
-        final PayloadRegistrar registrar = event.registrar("1");
+        final PayloadRegistrar registrar = event.registrar("2");
 
         registrar.playToServer(
                 SpyglassScopePacket.TYPE,

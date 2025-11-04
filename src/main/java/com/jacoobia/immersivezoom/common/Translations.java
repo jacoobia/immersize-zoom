@@ -2,6 +2,8 @@ package com.jacoobia.immersivezoom.common;
 
 import net.minecraft.network.chat.Component;
 
+import java.util.Locale;
+
 public class Translations {
 
     public static class Keybindings {
@@ -9,6 +11,12 @@ public class Translations {
         public static final String CATEGORY = "key.immersive_zoom.keybinds.category";
         public static final String ZOOM = "key.immersive_zoom.keybinds.keybind.zoom";
         public static final String TOGGLE_TEMP_SCREEN = "key.immersive_zoom.keybinds.keybind.toggle_temp_screen";
+    }
+
+    public static class Tooltips {
+        public static Component zoomLevel(float zoom) {
+            return Component.translatable("tooltip.immersive_zoom.zoom_level", String.format(Locale.ROOT, "%.1f", zoom));
+        }
     }
 
     public static class Lore {
