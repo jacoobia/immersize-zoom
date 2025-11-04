@@ -4,6 +4,7 @@ import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
+import com.jacoobia.immersivezoom.common.utils.BeltPlacement;
 import com.jacoobia.immersivezoom.common.utils.SpyglassType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -35,10 +36,15 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
     private static final double HIP_OFFSET_Y = 0.7;
     private static final double BACK_HIP_OFFSET_X = 0.1;
     private static final double BACK_HIP_OFFSET_Z = 0.15;
-    private static final double FRONT_HIP_OFFSET_X = 0.13;
+    private static final double FRONT_HIP_OFFSET_X = 0.2;
     private static final double FRONT_HIP_OFFSET_Z = -0.2;
     private static final double SIDE_HIP_OFFSET_X = 0.25;
     private static final double SIDE_HIP_OFFSET_Z = 0.0;
+
+    private static final float WALK_SWING = 3f;
+    private static final float WALK_SWING_RATE = 6f;
+    private static final float WALKING_BOB = 0.1f;
+    private static final float HANG = 0.2f;
 
     private final ItemStack spyglassStack = new ItemStack(Items.SPYGLASS);
     private final ItemStack attunedSpyglassStack = new ItemStack(ItemRegistry.ATTUNED_SPYGLASS.get());
@@ -87,19 +93,15 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
         this.getParentModel().body.translateAndRotate(pose);
 
         boolean left = data.placement().isLeft();
-        double offsetX = switch (data.placement()) {
-            case FRONT_LEFT, FRONT_RIGHT -> FRONT_HIP_OFFSET_X;
-            case SIDE_LEFT, SIDE_RIGHT -> SIDE_HIP_OFFSET_X;
-            case BACK_LEFT, BACK_RIGHT -> BACK_HIP_OFFSET_X;
-        };
+        pose.translate(offsetX(data.placement()), HIP_OFFSET_Y, offsetZ(data.placement()));
 
-        double z = switch (data.placement()) {
-            case FRONT_LEFT, FRONT_RIGHT -> FRONT_HIP_OFFSET_Z;
-            case SIDE_LEFT, SIDE_RIGHT -> SIDE_HIP_OFFSET_Z;
-            case BACK_LEFT, BACK_RIGHT -> BACK_HIP_OFFSET_Z;
-        };
+        if (ClientConfig.BELT_SWAY.get()) {
+            pose.translate(0, -HANG, 0);
+            pose.mulPose(Axis.XP.rotationDegrees(BeltPhysics.pitch(player, partialTicks) + walkSwing(player, partialTicks)));
+            pose.mulPose(Axis.ZP.rotationDegrees(BeltPhysics.roll(player, partialTicks)));
+            pose.translate(0, HANG, 0);
+        }
 
-        pose.translate(left ? offsetX : -offsetX, HIP_OFFSET_Y, z);
         pose.mulPose(Axis.YP.rotationDegrees(left ? -90f : 90f));
         pose.scale(0.8f, 0.4f, 0.8f);
 
@@ -115,5 +117,42 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
         );
 
         pose.popPose();
+    }
+
+    /**
+     * @param placement the belt placement
+     * @return the spyglass's X offset from the body pivot, +X is the player's left
+     */
+    static double offsetX(BeltPlacement placement) {
+        double offset = switch (placement) {
+            case FRONT_LEFT, FRONT_RIGHT -> FRONT_HIP_OFFSET_X;
+            case SIDE_LEFT, SIDE_RIGHT -> SIDE_HIP_OFFSET_X;
+            case BACK_LEFT, BACK_RIGHT -> BACK_HIP_OFFSET_X;
+        };
+        return placement.isLeft() ? offset : -offset;
+    }
+
+    /**
+     * @param placement the belt placement
+     * @return the spyglass's Z offset from the body pivot, +Z is the player's back
+     */
+    static double offsetZ(BeltPlacement placement) {
+        return switch (placement) {
+            case FRONT_LEFT, FRONT_RIGHT -> FRONT_HIP_OFFSET_Z;
+            case SIDE_LEFT, SIDE_RIGHT -> SIDE_HIP_OFFSET_Z;
+            case BACK_LEFT, BACK_RIGHT -> BACK_HIP_OFFSET_Z;
+        };
+    }
+
+    /**
+     * A small swing with each step, zero when standing still or in the air
+     * @param player the player wearing the spyglass
+     * @param partialTicks the render partial tick
+     * @return the swing in degrees
+     */
+    private static float walkSwing(AbstractClientPlayer player, float partialTicks) {
+        float bob = Mth.lerp(partialTicks, player.oBob, player.bob);
+        float walked = Mth.lerp(partialTicks, player.walkDistO, player.walkDist);
+        return Mth.sin(walked * WALK_SWING_RATE) * WALK_SWING * (bob / WALKING_BOB);
     }
 }

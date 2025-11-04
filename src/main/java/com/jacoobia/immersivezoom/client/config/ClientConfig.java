@@ -23,6 +23,11 @@ public class ClientConfig {
             .translation(Translations.Config.RENDER_BELT_SPYGLASSES)
             .define("renderBeltSpyglasses", true);
 
+    public static final ModConfigSpec.BooleanValue BELT_SWAY = BUILDER
+            .comment(Translations.Config.BELT_SWAY_TOOLTIP)
+            .translation(Translations.Config.BELT_SWAY)
+            .define("beltSway", true);
+
     public static final ModConfigSpec.BooleanValue ZOOM_SOUND = BUILDER
             .comment(Translations.Config.ZOOM_SOUND_TOOLTIP)
             .translation(Translations.Config.ZOOM_SOUND)

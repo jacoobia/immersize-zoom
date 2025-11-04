@@ -22,7 +22,9 @@
   "immersive_zoom.configuration.showBeltSpyglass.tooltip": "Toggle showing your spyglass on your belt.",
   "immersive_zoom.configuration.renderBeltSpyglasses": "Render Belt Spyglasses",
   "immersive_zoom.configuration.renderBeltSpyglasses.tooltip": "Toggle the visibility of all belt spyglasses.",
-  "immersive_zoom.configuration.zoomSound": "Zoom Sound",
+  "immersive_zoom.configuration.beltSway": "Belt Physics",
+  "immersive_zoom.configuration.beltSway.tooltip": "Toggle the physics/sway of the spyglass when rendered on the belt.",
+  "immersive_zoom.configuration.zoomSound":"Zoom Sound",
   "immersive_zoom.configuration.zoomSound.tooltip": "Toggle the sound when zooming with the Attuned Spyglass.",
 
   "lore.immersive_zoom.attune": "You raise the shard up to the sky, it appears to be collecting moonlight...",

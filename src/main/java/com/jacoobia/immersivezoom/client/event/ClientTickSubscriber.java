@@ -1,6 +1,9 @@
 package com.jacoobia.immersivezoom.client.event;
 
+import com.jacoobia.immersivezoom.client.config.ClientConfig;
+import com.jacoobia.immersivezoom.client.render.BeltPhysics;
 import com.jacoobia.immersivezoom.client.utils.LocalZoomState;
+import net.minecraft.client.Minecraft;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import net.minecraft.client.player.LocalPlayer;
@@ -29,6 +32,7 @@ public class ClientTickSubscriber {
 
         LocalZoomState.update(player);
         ClientInputSubscriber.tickZoomSync();
+        if (ClientConfig.BELT_SWAY.get() && !Minecraft.getInstance().isPaused()) BeltPhysics.tickAll(player.clientLevel);
 
         boolean scoping = LocalZoomState.isHotkeyScoping();
         if (scoping != wasScoping) {
