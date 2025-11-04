@@ -1,7 +1,7 @@
 package com.jacoobia.immersivezoom.client.event;
 
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
-import net.minecraft.world.entity.player.Player;
+import com.jacoobia.immersivezoom.client.utils.LocalZoomState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -19,15 +19,11 @@ public class ClientHudSubscriber {
      */
     @SubscribeEvent
     public static void onOverlayPre(RenderGuiLayerEvent.Pre event) {
-        Player player = ClientUtils.getLocalPlayer();
-        if (player == null) return;
+        // Runs for every GUI layer every frame, so it only reads the cached per-tick state
+        if (!LocalZoomState.isZooming() || ClientUtils.isThirdPerson()) return;
 
-        if (ClientUtils.isThirdPerson()) return;
-
-        if (ClientUtils.isZoomingWithAttunedSpyglass() || player.isScoping()) {
-            if (!event.getName().equals(VanillaGuiLayers.CAMERA_OVERLAYS))
-                event.setCanceled(true);
-        }
+        if (!event.getName().equals(VanillaGuiLayers.CAMERA_OVERLAYS))
+            event.setCanceled(true);
     }
 
 }

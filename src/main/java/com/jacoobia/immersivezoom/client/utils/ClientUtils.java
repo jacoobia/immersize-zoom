@@ -2,14 +2,11 @@ package com.jacoobia.immersivezoom.client.utils;
 
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
-import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.jacoobia.immersivezoom.common.utils.SpyglassType;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
-
-import static com.jacoobia.immersivezoom.client.registry.KeyMapRegistry.ZOOM_KEYMAPPING;
 
 public class ClientUtils {
 
@@ -31,15 +28,6 @@ public class ClientUtils {
     }
 
     /**
-     * Checks if the local player is currently zooming with an attuned spyglass
-     * @return true if the player is using an attuned spyglass, false otherwise
-     */
-    public static boolean isZoomingWithAttunedSpyglass() {
-        Player player = getLocalPlayer();
-        return player != null && player.getUseItem().is(ItemRegistry.ATTUNED_SPYGLASS.get());
-    }
-
-    /**
      * Check if the player is in third person front view
      * @return true if the player is in third person front view
      */
@@ -48,10 +36,16 @@ public class ClientUtils {
         return minecraft.options.getCameraType() != CameraType.FIRST_PERSON;
     }
 
+    /**
+     * Whether a player is zooming with the hotkey: the local player's own state, or the
+     * server-synced flag for other players
+     * @param player the player to check
+     * @return true if that player is zooming with the spyglass slot hotkey
+     */
     public static boolean isHotkeyScoping(Player player) {
+        if (player.isLocalPlayer()) return LocalZoomState.isHotkeyScoping();
         SpyglassSlotData data = player.getData(AttachmentRegistry.HIP_SPYGLASS);
-        if (data.spyglassType() == SpyglassType.NONE) return false;
-        return player.isLocalPlayer() ? ZOOM_KEYMAPPING.isDown() : data.scoping();
+        return data.spyglassType() != SpyglassType.NONE && data.scoping();
     }
 
 

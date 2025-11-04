@@ -1,8 +1,8 @@
 package com.jacoobia.immersivezoom.client.event;
 
+import com.jacoobia.immersivezoom.client.utils.LocalZoomState;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
-import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.client.player.LocalPlayer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -11,7 +11,6 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import static com.jacoobia.immersivezoom.client.registry.KeyMapRegistry.ZOOM_KEYMAPPING;
 import static com.jacoobia.immersivezoom.common.Constants.*;
 
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
@@ -19,33 +18,31 @@ public class ClientTickSubscriber {
 
     private static boolean wasScoping = false;
 
+    // Pre, so the zoom state is fresh before the game ticks the FOV this tick
     @SubscribeEvent
-    public static void onClientTick(ClientTickEvent.Post event) {
+    public static void onClientTick(ClientTickEvent.Pre event) {
         LocalPlayer player = ClientUtils.getLocalPlayerCast();
-        if (player == null) return;
+        if (player == null) {
+            LocalZoomState.reset();
+            return;
+        }
 
-        boolean keyDown = ZOOM_KEYMAPPING.isDown();
+        LocalZoomState.update(player);
 
-        boolean hasSpyglass =
-                SpyglassUtils.isSpyglass(player.getUseItem())
-                        || SpyglassUtils.isSpyglass(player.getInventory().getItem(SPYGLASS_SLOT_INDEX));
-
-        boolean wantsScope = keyDown && hasSpyglass;
-
-        if (wantsScope != wasScoping) {
-            if (wantsScope) {
+        boolean scoping = LocalZoomState.isHotkeyScoping();
+        if (scoping != wasScoping) {
+            if (scoping) {
                 PacketDistributor.sendToServer(SpyglassScopePacket.start());
             } else {
                 PacketDistributor.sendToServer(SpyglassScopePacket.stop());
             }
-            wasScoping = wantsScope;
+            wasScoping = scoping;
         }
     }
 
     @SubscribeEvent
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         wasScoping = false;
+        LocalZoomState.reset();
     }
 }
-
-

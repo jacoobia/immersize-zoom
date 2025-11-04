@@ -5,10 +5,13 @@ import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.network.PacketHandler;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
+import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+
+import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_INDEX;
 
 public class ServerSpyglassScopePacketHandler implements PacketHandler<SpyglassScopePacket> {
 
@@ -26,7 +29,8 @@ public class ServerSpyglassScopePacketHandler implements PacketHandler<SpyglassS
 
             switch (packet.opcode()) {
                 case START -> {
-                    if (!was) {
+                    // Only hotkey zoom sends START, so the spyglass must be in the slot
+                    if (!was && SpyglassUtils.isSpyglass(player.getInventory().getItem(SPYGLASS_SLOT_INDEX))) {
                         setScoping(player, true);
                         player.level().playSound(
                                 null, player.getX(), player.getY(), player.getZ(),
