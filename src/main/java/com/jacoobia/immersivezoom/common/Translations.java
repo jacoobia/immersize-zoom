@@ -1,5 +1,6 @@
 package com.jacoobia.immersivezoom.common;
 
+import com.jacoobia.immersivezoom.common.utils.BeltPlacement;
 import net.minecraft.network.chat.Component;
 
 import java.util.Locale;
@@ -7,7 +8,6 @@ import java.util.Locale;
 public class Translations {
 
     public static class Keybindings {
-        // Plain keys, not Components: KeyMapping translates these itself, and saves them in options.txt
         public static final String CATEGORY = "key.immersive_zoom.keybinds.category";
         public static final String ZOOM = "key.immersive_zoom.keybinds.keybind.zoom";
     }
@@ -15,6 +15,15 @@ public class Translations {
     public static class Tooltips {
         public static Component zoomLevel(float zoom) {
             return Component.translatable("tooltip.immersive_zoom.zoom_level", String.format(Locale.ROOT, "%.1f", zoom));
+        }
+    }
+
+    public static class Config {
+        public static final String BELT_PLACEMENT = "immersive_zoom.configuration.beltPlacement";
+        public static final String BELT_PLACEMENT_TOOLTIP = "immersive_zoom.configuration.beltPlacement.tooltip";
+
+        public static Component beltPlacement(BeltPlacement placement) {
+            return Component.translatable(BELT_PLACEMENT + "." + placement.name().toLowerCase(Locale.ROOT));
         }
     }
 

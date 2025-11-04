@@ -56,7 +56,7 @@ public class ServerSpyglassScopePacketHandler implements PacketHandler<SpyglassS
 
     private static void setScoping(ServerPlayer player, boolean scoping) {
         var data = player.getData(AttachmentRegistry.HIP_SPYGLASS);
-        player.setData(AttachmentRegistry.HIP_SPYGLASS, new SpyglassSlotData(data.spyglassType(), data.side(), scoping));
+        player.setData(AttachmentRegistry.HIP_SPYGLASS, new SpyglassSlotData(data.spyglassType(), data.placement(), scoping));
         SpyglassSlot.syncSlotContent(player);
     }
 

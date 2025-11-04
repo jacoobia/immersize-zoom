@@ -1,12 +1,15 @@
 package com.jacoobia.immersivezoom.client.utils;
 
+import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
+import com.jacoobia.immersivezoom.common.network.packet.BeltPlacementPacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
 import com.jacoobia.immersivezoom.common.utils.SpyglassType;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ClientUtils {
 
@@ -48,5 +51,12 @@ public class ClientUtils {
         return data.spyglassType() != SpyglassType.NONE && data.scoping();
     }
 
+    /**
+     * Tells the server the configured belt placement
+     */
+    public static void sendBeltPlacement() {
+        if (Minecraft.getInstance().getConnection() == null) return;
+        PacketDistributor.sendToServer(new BeltPlacementPacket(ClientConfig.BELT_PLACEMENT.get()));
+    }
 
 }
