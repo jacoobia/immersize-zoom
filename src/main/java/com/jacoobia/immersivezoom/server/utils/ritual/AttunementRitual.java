@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
+import static com.jacoobia.immersivezoom.common.utils.NumberUtils.FLOAT_ONE;
 
 /**
  * The attunement ritual!
@@ -31,6 +32,9 @@ public class AttunementRitual {
     private static final int SWAP_AT = 80;
     private static final int RELEASE_AT = 90;
 
+    private static final double RISE_START_DISTANCE = 0.5;
+    private static final double RISE_START_DROP = 0.6;
+    private static final float LIFT_PITCH = 1.4F;
     private static final double FLOAT_DISTANCE = 1.2; // blocks in front of the player
     private static final double FLOAT_DROP = 0.3;     // below eye height
     private static final double ITEM_CENTRE_HEIGHT = 0.5; // entity position to the visual centre of the bobbing item
@@ -52,7 +56,7 @@ public class AttunementRitual {
     public static void start(ServerLevel level, ServerPlayer player, ItemStack shard) {
         Vec3 forward = Vec3.directionFromRotation(0, player.getYRot());
         Vec3 to = player.getEyePosition().add(forward.scale(FLOAT_DISTANCE)).subtract(0, FLOAT_DROP, 0);
-        Vec3 from = player.getEyePosition().add(forward.scale(0.5)).subtract(0, 0.6, 0);
+        Vec3 from = player.getEyePosition().add(forward.scale(RISE_START_DISTANCE)).subtract(0, RISE_START_DROP, 0);
 
         ItemEntity entity = new ItemEntity(level, from.x, from.y, from.z, shard, 0, 0, 0);
         entity.setNoGravity(true);
@@ -60,7 +64,7 @@ public class AttunementRitual {
         level.addFreshEntity(entity);
         entity.getPersistentData().putBoolean(TAG, true);
 
-        level.playSound(null, entity.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.4F);
+        level.playSound(null, entity.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, FLOAT_ONE, LIFT_PITCH);
         ACTIVE_RITUALS.add(new Ritual(level, player.getUUID(), entity, from, to));
     }
 
@@ -111,7 +115,7 @@ public class AttunementRitual {
 
         if (ticksLived == SWAP_AT) {
             entity.setItem(ItemRegistry.ATTUNED_AMETHYST_SHARD.get().getDefaultInstance());
-            ritual.getLevel().playSound(null, entity.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.0F, 1.0F);
+            ritual.getLevel().playSound(null, entity.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, FLOAT_ONE, FLOAT_ONE);
         }
         if (ticksLived == RELEASE_AT) {
             release(entity);

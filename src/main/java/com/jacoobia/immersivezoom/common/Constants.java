@@ -1,5 +1,6 @@
 package com.jacoobia.immersivezoom.common;
 
+import com.jacoobia.immersivezoom.common.utils.BeltPlacement;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.resources.ResourceLocation;
 
@@ -23,6 +24,12 @@ public class Constants {
     public static final int SPYGLASS_SLOT_INDEX = 41;
 
     public static final int DEFAULT_ZOOM_KEY = InputConstants.KEY_Z;
+
+    public static final BeltPlacement DEFAULT_BELT_PLACEMENT = BeltPlacement.BACK_RIGHT;
+    public static final boolean DEFAULT_SHOW_BELT_SPYGLASS = true;
+    public static final boolean DEFAULT_RENDER_BELT_SPYGLASSES = true;
+    public static final boolean DEFAULT_BELT_SWAY = true;
+    public static final boolean DEFAULT_ZOOM_SOUND = true;
 
     public static final int SPYGLASS_SLOT_X = 77;
     public static final int SPYGLASS_SLOT_Y = 44;

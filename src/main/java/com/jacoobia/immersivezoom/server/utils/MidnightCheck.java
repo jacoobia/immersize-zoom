@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.jacoobia.immersivezoom.common.utils.NumberUtils.FLOAT_ONE;
+
 /**
  * Hums at players carrying an Unattuned Amethyst Shard when midnight starts in the overworld,
  * hinting that it's time for the attunement ritual. Also hums at players who arrive in the
@@ -124,7 +126,7 @@ public class MidnightCheck {
             player.displayClientMessage(Translations.Lore.midnight, true);
             player.level().playSound(
                     null, player.getX(), player.getY(), player.getZ(),
-                    SoundRegistry.HUM.get(), SoundSource.PLAYERS, 1.0F, 1.0F
+                    SoundRegistry.HUM.get(), SoundSource.PLAYERS, FLOAT_ONE, FLOAT_ONE
             );
             ACTIVE_NUDGES.put(player.getUUID(), NUDGE_DURATION_TICKS);
         }
