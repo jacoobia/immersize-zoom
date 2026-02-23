@@ -1,8 +1,8 @@
 package com.jacoobia.immersivezoom.common.utils;
 
-import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+
+import static com.jacoobia.immersivezoom.common.Constants.ZOOM_ITEMS;
 
 /**
  * Utility class for handling operations related to spyglasses, including
@@ -14,10 +14,10 @@ public class SpyglassUtils {
     /**
      * Checks if the given ItemStack is a spyglass
      * @param stack the ItemStack to check
-     * @return true if the ItemStack is a spyglass, false otherwise
+     * @return true if the ItemStack is in the immersive_zoom:zoom_items tag, false otherwise
      */
     public static boolean isSpyglass(ItemStack stack) {
-        return stack.is(Items.SPYGLASS) || stack.is(ItemRegistry.ATTUNED_SPYGLASS);
+        return stack.is(ZOOM_ITEMS);
     }
 
 }

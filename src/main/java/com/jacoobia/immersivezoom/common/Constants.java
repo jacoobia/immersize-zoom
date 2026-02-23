@@ -3,6 +3,9 @@ package com.jacoobia.immersivezoom.common;
 import com.jacoobia.immersivezoom.common.utils.BeltPlacement;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 
 public class Constants {
 
@@ -38,5 +41,7 @@ public class Constants {
 
     public static final ResourceLocation EMPTY_SLOT_SPYGLASS =
             ResourceLocation.fromNamespaceAndPath(MOD_ID,"item/empty_slot_spyglass");
+
+    public static final TagKey<Item> ZOOM_ITEMS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(MOD_ID, "zoom_items"));
 
 }
