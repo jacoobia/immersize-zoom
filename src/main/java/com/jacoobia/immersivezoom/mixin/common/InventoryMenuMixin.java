@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_INDEX;
 import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_X;
 import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_Y;
 
@@ -24,7 +23,7 @@ public class InventoryMenuMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void addCustomSlot(Inventory playerInventory, boolean active, Player owner, CallbackInfo callback) {
-        SpyglassSlot slot = new SpyglassSlot(playerInventory, SPYGLASS_SLOT_INDEX, SPYGLASS_SLOT_X, SPYGLASS_SLOT_Y, owner);
+        SpyglassSlot slot = new SpyglassSlot(owner, SPYGLASS_SLOT_X, SPYGLASS_SLOT_Y);
         ((InventoryMenuAccessor)this).invokeAddSlot(slot);
     }
 

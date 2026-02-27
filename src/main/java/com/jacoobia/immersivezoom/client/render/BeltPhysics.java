@@ -3,7 +3,6 @@ package com.jacoobia.immersivezoom.client.render;
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
 import com.jacoobia.immersivezoom.common.utils.BeltPlacement;
-import com.jacoobia.immersivezoom.common.utils.SpyglassType;
 import lombok.NoArgsConstructor;
 import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import net.minecraft.client.Minecraft;
@@ -50,7 +49,7 @@ public final class BeltPhysics {
 
         for (AbstractClientPlayer player : level.players()) {
             SpyglassSlotData data = player.getData(AttachmentRegistry.HIP_SPYGLASS);
-            if (!renderAll || !data.visible() || data.spyglassType() == SpyglassType.NONE
+            if (!renderAll || !data.visible() || data.stack().isEmpty()
                     || !player.shouldRender(camera.x, camera.y, camera.z)) {
                 STATES.remove(player);
                 continue;

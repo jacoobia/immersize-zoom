@@ -25,7 +25,7 @@ public class ServerBeltPlacementPacketHandler implements PacketHandler<BeltPlace
             if (data.placement() == packet.placement() && data.visible() == packet.visible()) return;
 
             player.setData(AttachmentRegistry.HIP_SPYGLASS,
-                    new SpyglassSlotData(data.spyglassType(), packet.placement(), packet.visible(), data.scoping()));
+                    new SpyglassSlotData(data.stack(), packet.placement(), packet.visible(), data.scoping()));
             SpyglassSlot.syncSlotContent(player);
         });
     }

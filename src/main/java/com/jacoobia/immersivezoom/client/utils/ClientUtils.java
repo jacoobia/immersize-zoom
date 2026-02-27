@@ -4,7 +4,6 @@ import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.network.packet.BeltPlacementPacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
-import com.jacoobia.immersivezoom.common.utils.SpyglassType;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -48,7 +47,7 @@ public class ClientUtils {
     public static boolean isHotkeyScoping(Player player) {
         if (player.isLocalPlayer()) return LocalZoomState.isHotkeyScoping();
         SpyglassSlotData data = player.getData(AttachmentRegistry.HIP_SPYGLASS);
-        return data.spyglassType() != SpyglassType.NONE && data.scoping();
+        return !data.stack().isEmpty() && data.scoping();
     }
 
     /**

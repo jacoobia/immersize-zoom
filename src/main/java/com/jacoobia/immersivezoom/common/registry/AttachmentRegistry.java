@@ -1,6 +1,7 @@
 package com.jacoobia.immersivezoom.common.registry;
 
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -21,6 +22,14 @@ public class AttachmentRegistry {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<SpyglassSlotData>> HIP_SPYGLASS =
             ATTACHMENTS.register("hip_spyglass", () ->
                     AttachmentType.builder(() -> SpyglassSlotData.EMPTY).build()
+            );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<ItemStack>> SPYGLASS_SLOT =
+            ATTACHMENTS.register("spyglass_slot", () ->
+                    AttachmentType.builder(() -> ItemStack.EMPTY)
+                            .serialize(ItemStack.OPTIONAL_CODEC, stack -> !stack.isEmpty())
+                            .copyOnDeath()
+                            .build()
             );
 
 }

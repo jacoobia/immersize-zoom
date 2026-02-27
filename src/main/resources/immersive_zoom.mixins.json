@@ -6,7 +6,6 @@
   "mixins": [
     "accessors.InventoryMenuAccessor",
     "common.InventoryMenuMixin",
-    "common.InventoryMixin",
     "common.ServerGamePacketListenerImplMixin"
   ],
   "client": [

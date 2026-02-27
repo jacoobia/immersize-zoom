@@ -8,7 +8,6 @@ import com.jacoobia.immersivezoom.server.utils.ServerUtils;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -19,13 +18,14 @@ import java.util.Objects;
 
 import static com.jacoobia.immersivezoom.common.Constants.EMPTY_SLOT_SPYGLASS;
 import static net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 public class SpyglassSlot extends Slot {
 
     private final Player owner;
 
-    public SpyglassSlot(Container container, int slot, int x, int y, Player owner) {
-        super(container, slot, x, y);
+    public SpyglassSlot(Player owner, int x, int y) {
+        super(new SpyglassContainer(owner), INTEGER_ZERO, x, y);
         this.owner = owner;
     }
 
@@ -59,8 +59,7 @@ public class SpyglassSlot extends Slot {
         if (owner.level().isClientSide) return;
         if (!(owner instanceof ServerPlayer player)) return;
 
-        ItemStack current = this.getItem();
-        ServerUtils.setHipItem(player, current.isEmpty() ? ItemStack.EMPTY : current.copy());
+        ServerUtils.setHipItem(player, this.getItem());
         syncSlotContent(player);
     }
 

@@ -3,9 +3,7 @@ package com.jacoobia.immersivezoom.client.render;
 import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
-import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.jacoobia.immersivezoom.common.utils.BeltPlacement;
-import com.jacoobia.immersivezoom.common.utils.SpyglassType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -19,7 +17,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY;
@@ -46,9 +43,6 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
     private static final float WALKING_BOB = 0.1f;
     private static final float HANG = 0.2f;
 
-    private final ItemStack spyglassStack = new ItemStack(Items.SPYGLASS);
-    private final ItemStack attunedSpyglassStack = new ItemStack(ItemRegistry.ATTUNED_SPYGLASS.get());
-
     public ScopeSlotHipModelLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent) {
         super(parent);
     }
@@ -61,11 +55,10 @@ public class ScopeSlotHipModelLayer extends RenderLayer<AbstractClientPlayer, Pl
         if (!AttachmentRegistry.HIP_SPYGLASS.isBound()) return;
 
         var data = player.getData(AttachmentRegistry.HIP_SPYGLASS.get());
-        if (data.spyglassType() == SpyglassType.NONE) return;
+        ItemStack stack = data.stack();
+        if (stack.isEmpty()) return;
 
         if (player.isLocalPlayer() && Minecraft.getInstance().options.getCameraType().isFirstPerson()) return;
-
-        ItemStack stack = (data.spyglassType() == SpyglassType.ATTUNED) ? attunedSpyglassStack : spyglassStack;
 
         if (ClientUtils.isHotkeyScoping(player)) {
             pose.pushPose();

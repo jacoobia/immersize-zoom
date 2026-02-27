@@ -7,7 +7,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 
 import static com.jacoobia.immersivezoom.client.registry.KeyMapRegistry.ZOOM_KEYMAPPING;
-import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_INDEX;
 
 public final class LocalZoomState {
 
@@ -25,7 +24,7 @@ public final class LocalZoomState {
     public static void update(LocalPlayer player) {
         hotkeyScoping = ZOOM_KEYMAPPING.isDown()
                 && !player.isUsingItem()
-                && SpyglassUtils.isSpyglass(player.getInventory().getItem(SPYGLASS_SLOT_INDEX));
+                && SpyglassUtils.isSpyglass(SpyglassUtils.getSlotItem(player));
 
         if (player.isUsingItem() && SpyglassUtils.isSpyglass(player.getUseItem())) {
             zooming = true;
@@ -51,7 +50,7 @@ public final class LocalZoomState {
         LocalPlayer player = ClientUtils.getLocalPlayerCast();
         if (!zooming || player == null) return ItemStack.EMPTY;
         return hand == null
-                ? player.getInventory().getItem(SPYGLASS_SLOT_INDEX)
+                ? SpyglassUtils.getSlotItem(player)
                 : player.getItemInHand(hand);
     }
 
