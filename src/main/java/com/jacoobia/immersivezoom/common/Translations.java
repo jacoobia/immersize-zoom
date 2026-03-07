@@ -39,6 +39,7 @@ public class Translations {
         public static Component attuneLore = Component.translatable("lore.immersive_zoom.attune");
         public static Component midnight = Component.translatable("lore.immersive_zoom.midnight");
         public static Component mined = Component.translatable("lore.immersive_zoom.mined");
+        public static Component unattunedTooltip = Component.translatable("lore.immersive_zoom.unattuned_tooltip");
     }
 
     public static class Advancements {
