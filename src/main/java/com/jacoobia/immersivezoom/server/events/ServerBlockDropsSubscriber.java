@@ -11,7 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockDropsEvent;
 
 import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
-import static com.jacoobia.immersivezoom.common.utils.NumberUtils.FLOAT_ONE;
+import static org.apache.commons.lang3.math.NumberUtils.FLOAT_ONE;
 
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class ServerBlockDropsSubscriber {

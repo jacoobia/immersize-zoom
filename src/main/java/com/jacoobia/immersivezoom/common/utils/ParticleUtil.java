@@ -8,8 +8,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 
-import static com.jacoobia.immersivezoom.common.utils.NumberUtils.INT_ONE;
-import static com.jacoobia.immersivezoom.common.utils.NumberUtils.INT_ZERO;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 public class ParticleUtil {
 
@@ -50,9 +50,9 @@ public class ParticleUtil {
         for (int i = 0; i < RITUAL_MOTES_PER_TICK; i++) {
             spawnMote(level, centre, RITUAL_RADIUS_MIN, RITUAL_RADIUS_RANGE, RITUAL_HEIGHT_MIN, RITUAL_HEIGHT_RANGE, MOTE_SPEED);
         }
-        if (age % RITUAL_CHIME_DELAY == INT_ZERO) {
+        if (age % RITUAL_CHIME_DELAY == INTEGER_ZERO) {
             level.sendParticles(ParticleTypes.GLOW, centre.x, centre.y, centre.z, RITUAL_GLOW_COUNT,
-                    RITUAL_GLOW_SPREAD, RITUAL_GLOW_SPREAD, RITUAL_GLOW_SPREAD, INT_ZERO);
+                    RITUAL_GLOW_SPREAD, RITUAL_GLOW_SPREAD, RITUAL_GLOW_SPREAD, INTEGER_ZERO);
             level.playSound(null, BlockPos.containing(centre), SoundEvents.AMETHYST_BLOCK_CHIME,
                     SoundSource.PLAYERS, RITUAL_CHIME_VOLUME, RITUAL_CHIME_PITCH + age / RITUAL_CHIME_PITCH_RISE);
         }
@@ -94,7 +94,7 @@ public class ParticleUtil {
         double height = heightMin + random.nextDouble() * heightRange;
         Vec3 start = centre.add(Math.cos(angle) * radius, height, Math.sin(angle) * radius);
         Vec3 velocity = centre.subtract(start).scale(speed);
-        level.sendParticles(ParticleTypes.END_ROD, start.x, start.y, start.z, INT_ZERO, velocity.x, velocity.y, velocity.z, INT_ONE);
+        level.sendParticles(ParticleTypes.END_ROD, start.x, start.y, start.z, INTEGER_ZERO, velocity.x, velocity.y, velocity.z, INTEGER_ONE);
     }
 
 }

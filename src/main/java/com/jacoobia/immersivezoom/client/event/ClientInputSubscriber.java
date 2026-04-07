@@ -5,7 +5,6 @@ import com.jacoobia.immersivezoom.client.utils.LocalZoomState;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassZoomPacket;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
-import com.jacoobia.immersivezoom.common.utils.DataUtils;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -24,8 +23,8 @@ import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 import static com.jacoobia.immersivezoom.common.Constants.QUICK_ZOOM_STEP;
 import static com.jacoobia.immersivezoom.common.Constants.ZOOM_STEP;
 import static com.jacoobia.immersivezoom.common.registry.DataComponentRegistry.ZOOM_FACTOR;
-import static com.jacoobia.immersivezoom.common.utils.NumberUtils.FLOAT_ONE;
-import static com.jacoobia.immersivezoom.common.utils.NumberUtils.INT_ZERO;
+import static org.apache.commons.lang3.math.NumberUtils.FLOAT_ONE;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientInputSubscriber {
@@ -49,10 +48,10 @@ public class ClientInputSubscriber {
         event.setCanceled(true);
 
         double deltaY = event.getScrollDeltaY();
-        if (deltaY == INT_ZERO) return;
+        if (deltaY == INTEGER_ZERO) return;
 
         float step = player.isShiftKeyDown() ? QUICK_ZOOM_STEP : ZOOM_STEP;
-        float current = DataUtils.getFloatOrDefault(activeSpyglassStack, ZOOM_FACTOR, ATTUNED_ZOOM_DEFAULT);
+        float current = activeSpyglassStack.getOrDefault(ZOOM_FACTOR, ATTUNED_ZOOM_DEFAULT);
         float next = Mth.clamp(deltaY > 0 ? current * step : current / step, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
         if (next == current) return;
 

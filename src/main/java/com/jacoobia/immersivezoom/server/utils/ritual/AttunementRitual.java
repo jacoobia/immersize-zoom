@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
-import static com.jacoobia.immersivezoom.common.utils.NumberUtils.FLOAT_ONE;
+import static org.apache.commons.lang3.math.NumberUtils.FLOAT_ONE;
 
 /**
  * The attunement ritual!

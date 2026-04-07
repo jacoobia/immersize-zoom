@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.jacoobia.immersivezoom.common.utils.NumberUtils.FLOAT_ONE;
+import static org.apache.commons.lang3.math.NumberUtils.FLOAT_ONE;
 
 /**
  * Hums at players carrying an Unattuned Amethyst Shard when midnight starts in the overworld,

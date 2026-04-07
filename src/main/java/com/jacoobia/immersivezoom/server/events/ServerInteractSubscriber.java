@@ -14,7 +14,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
-import static com.jacoobia.immersivezoom.common.utils.NumberUtils.INT_ONE;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class ServerInteractSubscriber {
@@ -30,7 +30,7 @@ public class ServerInteractSubscriber {
                 if(AttunementRitual.isRunningFor(player)) return;
 
                 player.displayClientMessage(Translations.Lore.attuneLore, true);
-                AttunementRitual.start(level, player, itemStack.split(INT_ONE));
+                AttunementRitual.start(level, player, itemStack.split(INTEGER_ONE));
 
                 event.setCanceled(true);
                 event.setCancellationResult(InteractionResult.SUCCESS);

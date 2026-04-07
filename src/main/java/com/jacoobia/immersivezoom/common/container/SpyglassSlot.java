@@ -1,7 +1,6 @@
 package com.jacoobia.immersivezoom.common.container;
 
 import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
-import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassSlotSyncPacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
 import com.jacoobia.immersivezoom.server.utils.ServerUtils;
@@ -13,8 +12,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 import static com.jacoobia.immersivezoom.common.Constants.EMPTY_SLOT_SPYGLASS;
 import static net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS;
@@ -64,14 +61,9 @@ public class SpyglassSlot extends Slot {
     }
 
     public static void syncSlotContent(ServerPlayer player) {
-        SpyglassSlotData data = Objects.requireNonNullElse(
-                player.getData(AttachmentRegistry.HIP_SPYGLASS.get()),
-                SpyglassSlotData.EMPTY
-        );
-
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(
                 player,
-                new SpyglassSlotSyncPacket(player.getId(), data)
+                new SpyglassSlotSyncPacket(player.getId(), player.getData(AttachmentRegistry.HIP_SPYGLASS))
         );
     }
 
