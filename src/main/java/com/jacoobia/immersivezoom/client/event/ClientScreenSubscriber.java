@@ -10,7 +10,11 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ContainerScreenEvent;
 
-import static com.jacoobia.immersivezoom.common.Constants.*;
+import static com.jacoobia.immersivezoom.common.Constants.CREATIVE_SPYGLASS_SLOT_X;
+import static com.jacoobia.immersivezoom.common.Constants.CREATIVE_SPYGLASS_SLOT_Y;
+import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
+import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_X;
+import static com.jacoobia.immersivezoom.common.Constants.SPYGLASS_SLOT_Y;
 
 /**
  * Draws the spyglass slot's frame in the players inventory

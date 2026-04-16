@@ -1,7 +1,7 @@
 package com.jacoobia.immersivezoom.client.event;
 
-import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import com.jacoobia.immersivezoom.client.registry.KeyMapRegistry;
+import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;

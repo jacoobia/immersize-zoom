@@ -1,10 +1,10 @@
 package com.jacoobia.immersivezoom.client.event;
 
 import com.jacoobia.immersivezoom.client.config.ClientConfig;
+import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.client.utils.LocalZoomState;
 import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassZoomPacket;
-import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;

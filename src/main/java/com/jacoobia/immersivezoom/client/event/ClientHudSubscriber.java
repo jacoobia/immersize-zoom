@@ -8,7 +8,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
-import static com.jacoobia.immersivezoom.common.Constants.*;
+import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientHudSubscriber {

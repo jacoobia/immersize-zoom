@@ -1,8 +1,8 @@
 package com.jacoobia.immersivezoom.mixin.client;
 
-import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
 import com.jacoobia.immersivezoom.client.utils.LocalZoomState;
+import com.jacoobia.immersivezoom.common.item.AttunedSpyglass;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
@@ -15,7 +15,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.jacoobia.immersivezoom.common.Constants.*;
+import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_DEFAULT;
+import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_MAX;
+import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_MIN;
+import static com.jacoobia.immersivezoom.common.Constants.VANILLA_ZOOM;
+import static com.jacoobia.immersivezoom.common.Constants.ZOOMED_TRANSITION_MODIFIER;
 import static com.jacoobia.immersivezoom.common.registry.DataComponentRegistry.ZOOM_FACTOR;
 
 @Mixin(GameRenderer.class)

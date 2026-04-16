@@ -13,7 +13,6 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 import static org.apache.commons.lang3.math.NumberUtils.FLOAT_ONE;

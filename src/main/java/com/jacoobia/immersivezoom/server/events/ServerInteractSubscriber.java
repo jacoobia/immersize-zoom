@@ -2,8 +2,8 @@ package com.jacoobia.immersivezoom.server.events;
 
 import com.jacoobia.immersivezoom.common.Translations;
 import com.jacoobia.immersivezoom.common.registry.ItemRegistry;
-import com.jacoobia.immersivezoom.server.utils.ritual.AttunementRitual;
 import com.jacoobia.immersivezoom.server.utils.TimeUtils;
+import com.jacoobia.immersivezoom.server.utils.ritual.AttunementRitual;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

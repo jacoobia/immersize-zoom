@@ -1,10 +1,10 @@
 package com.jacoobia.immersivezoom.client.render;
 
+import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import com.jacoobia.immersivezoom.common.data.SpyglassSlotData;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
 import com.jacoobia.immersivezoom.common.utils.BeltPlacement;
 import lombok.NoArgsConstructor;
-import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;

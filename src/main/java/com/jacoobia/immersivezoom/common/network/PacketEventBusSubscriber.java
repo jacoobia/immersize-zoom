@@ -2,12 +2,12 @@ package com.jacoobia.immersivezoom.common.network;
 
 import com.jacoobia.immersivezoom.client.network.handlers.ClientSpyglassSlotSyncPacketHandler;
 import com.jacoobia.immersivezoom.common.network.packet.BeltPlacementPacket;
+import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassSlotSyncPacket;
+import com.jacoobia.immersivezoom.common.network.packet.SpyglassZoomPacket;
 import com.jacoobia.immersivezoom.server.network.handlers.ServerBeltPlacementPacketHandler;
 import com.jacoobia.immersivezoom.server.network.handlers.ServerSpyglassScopePacketHandler;
 import com.jacoobia.immersivezoom.server.network.handlers.ServerSpyglassZoomPacketHandler;
-import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
-import com.jacoobia.immersivezoom.common.network.packet.SpyglassZoomPacket;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;

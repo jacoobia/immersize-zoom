@@ -2,10 +2,10 @@ package com.jacoobia.immersivezoom.client.event;
 
 import com.jacoobia.immersivezoom.client.config.ClientConfig;
 import com.jacoobia.immersivezoom.client.render.BeltPhysics;
-import com.jacoobia.immersivezoom.client.utils.LocalZoomState;
-import net.minecraft.client.Minecraft;
-import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
 import com.jacoobia.immersivezoom.client.utils.ClientUtils;
+import com.jacoobia.immersivezoom.client.utils.LocalZoomState;
+import com.jacoobia.immersivezoom.common.network.packet.SpyglassScopePacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -14,14 +14,13 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import static com.jacoobia.immersivezoom.common.Constants.*;
+import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
 
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientTickSubscriber {
 
     private static boolean wasScoping = false;
 
-    // Pre, so the zoom state is fresh before the game ticks the FOV this tick
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Pre event) {
         LocalPlayer player = ClientUtils.getLocalPlayerCast();

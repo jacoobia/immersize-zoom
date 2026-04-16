@@ -1,8 +1,8 @@
 package com.jacoobia.immersivezoom.common.container;
 
-import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import com.jacoobia.immersivezoom.common.network.packet.SpyglassSlotSyncPacket;
 import com.jacoobia.immersivezoom.common.registry.AttachmentRegistry;
+import com.jacoobia.immersivezoom.common.utils.SpyglassUtils;
 import com.jacoobia.immersivezoom.server.utils.ServerUtils;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
@@ -68,4 +68,3 @@ public class SpyglassSlot extends Slot {
     }
 
 }
-

@@ -8,7 +8,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 import static com.jacoobia.immersivezoom.common.Constants.MOD_ID;
-import static net.minecraft.client.resources.PlayerSkin.Model.*;
+import static net.minecraft.client.resources.PlayerSkin.Model.SLIM;
+import static net.minecraft.client.resources.PlayerSkin.Model.WIDE;
 
 @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEntityRenderSubscriber {

@@ -1,7 +1,7 @@
 package com.jacoobia.immersivezoom.server.events;
 
-import com.jacoobia.immersivezoom.server.utils.ritual.AttunementRitual;
 import com.jacoobia.immersivezoom.server.utils.MidnightCheck;
+import com.jacoobia.immersivezoom.server.utils.ritual.AttunementRitual;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;

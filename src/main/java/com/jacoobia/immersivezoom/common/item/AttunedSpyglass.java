@@ -13,7 +13,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-import static com.jacoobia.immersivezoom.common.Constants.*;
+import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_DEFAULT;
+import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_MAX;
+import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_MIN;
 import static com.jacoobia.immersivezoom.common.registry.DataComponentRegistry.ZOOM_FACTOR;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 

@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.78'
+    id 'com.diffplug.spotless' version '7.0.2'
 }
 
 version = mod_version
@@ -106,6 +107,22 @@ tasks.register('installGitHooks', Exec) {
     onlyIf { gitDir.exists() }
 }
 tasks.named('compileJava') { dependsOn 'installGitHooks' }
+
+spotless {
+    java {
+        target 'src/main/java/**/*.java'
+        removeUnusedImports()
+        importOrder('', 'javax|java', '\\#')
+        leadingTabsToSpaces(4)
+        trimTrailingWhitespace()
+        endWithNewline()
+        custom 'noWildcardImports', { String source ->
+            def wildcard = source =~ /(?m)^import .*\*;/
+            if (wildcard.find()) throw new GradleException("Wildcard import, list each name: ${wildcard.group()}")
+            source
+        }
+    }
+}
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.34'
