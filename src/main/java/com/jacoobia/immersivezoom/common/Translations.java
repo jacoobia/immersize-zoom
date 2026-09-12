@@ -10,6 +10,7 @@ public class Translations {
     public static class Keybindings {
         public static final String CATEGORY = "key.immersive_zoom.keybinds.category";
         public static final String ZOOM = "key.immersive_zoom.keybinds.keybind.zoom";
+        public static final String QUICK_ZOOM = "key.immersive_zoom.keybinds.keybind.quick_zoom";
     }
 
     public static class Tooltips {

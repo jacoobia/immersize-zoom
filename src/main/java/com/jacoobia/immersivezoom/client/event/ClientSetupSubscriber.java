@@ -31,6 +31,7 @@ public class ClientSetupSubscriber {
     @SubscribeEvent
     public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
         event.register(KeyMapRegistry.ZOOM_KEYMAPPING);
+        event.register(KeyMapRegistry.QUICK_ZOOM_KEYMAPPING);
     }
 
 }

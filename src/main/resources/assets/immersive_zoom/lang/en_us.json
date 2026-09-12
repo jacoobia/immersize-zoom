@@ -8,6 +8,7 @@
 
   "key.immersive_zoom.keybinds.category": "Immersive Zoom",
   "key.immersive_zoom.keybinds.keybind.zoom": "Zoom (Hold)",
+  "key.immersive_zoom.keybinds.keybind.quick_zoom": "Quick Zoom Scroll (Hold)",
 
   "immersive_zoom.configuration.title": "Immersive Zoom",
   "immersive_zoom.configuration.beltPlacement": "Spyglass Position",

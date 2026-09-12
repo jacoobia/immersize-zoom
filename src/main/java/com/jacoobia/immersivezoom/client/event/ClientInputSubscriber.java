@@ -16,6 +16,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import static com.jacoobia.immersivezoom.client.registry.KeyMapRegistry.QUICK_ZOOM_KEYMAPPING;
 import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_DEFAULT;
 import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_MAX;
 import static com.jacoobia.immersivezoom.common.Constants.ATTUNED_ZOOM_MIN;
@@ -50,7 +51,7 @@ public class ClientInputSubscriber {
         double deltaY = event.getScrollDeltaY();
         if (deltaY == INTEGER_ZERO) return;
 
-        float step = player.isShiftKeyDown() ? QUICK_ZOOM_STEP : ZOOM_STEP;
+        float step = QUICK_ZOOM_KEYMAPPING.isDown() ? QUICK_ZOOM_STEP : ZOOM_STEP;
         float current = activeSpyglassStack.getOrDefault(ZOOM_FACTOR, ATTUNED_ZOOM_DEFAULT);
         float next = Mth.clamp(deltaY > 0 ? current * step : current / step, ATTUNED_ZOOM_MIN, ATTUNED_ZOOM_MAX);
         if (next == current) return;

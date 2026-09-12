@@ -23,6 +23,7 @@ public class Constants {
     public static final float ZOOMED_TRANSITION_MODIFIER = 0.5f;
 
     public static final int DEFAULT_ZOOM_KEY = InputConstants.KEY_Z;
+    public static final int DEFAULT_QUICK_ZOOM_KEY = InputConstants.KEY_LSHIFT;
 
     public static final BeltPlacement DEFAULT_BELT_PLACEMENT = BeltPlacement.BACK_RIGHT;
     public static final boolean DEFAULT_SHOW_BELT_SPYGLASS = true;
