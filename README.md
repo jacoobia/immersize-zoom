@@ -27,3 +27,7 @@ The spyglass slot is drawn on top of the vanilla inventory rather than replacing
 ./gradlew build      # jar is written to build/libs
 ./gradlew runClient  # launches a dev client
 ```
+
+## License
+
+MIT, see [LICENSE](LICENSE).
