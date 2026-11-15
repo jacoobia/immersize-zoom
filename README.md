@@ -11,6 +11,19 @@ Immersive Zoom was initially built as a mod for just my friend and I to have on 
 - A new upgrade to the spyglass to unlock variable zoom
 - Render the spyglass on your player, hooked to your belt for some extra immersion :D
 
+<details>
+<summary>Crafting recipes</summary>
+
+**Copper Focus:** four copper ingots around a comparator
+
+![Copper Focus crafting recipe](.github/assets/crafting_focus.png)
+
+**Attuned Spyglass:** an Attuned Amethyst Shard, a Copper Focus and a spyglass
+
+![Attuned Spyglass crafting recipe](.github/assets/crafting_attuned_spyglass.png)
+
+</details>
+
 ## Requirements
 
 - Minecraft 1.21.1
